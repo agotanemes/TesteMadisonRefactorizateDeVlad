@@ -1,2 +1,8 @@
-# Project exclude paths
-/target/
+/target
+/bin
+.settings
+.classpath
+.project
+.idea
+internship-pom.iml
+SerenityProject.iml
