@@ -56,4 +56,10 @@ public class SerenitySessionUtils {
         Assert.assertTrue("The object with type " + matchElement + " wasn't found", false);
         return null;
     }
+    public static Integer getObjectListSize(String key){
+        Integer size=((List<Object>)Serenity.getCurrentSession().get(key)).size();
+        return size;
+
+    }
+
 }

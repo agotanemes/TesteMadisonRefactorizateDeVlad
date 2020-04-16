@@ -1,5 +1,6 @@
 package test;
 
+import com.firestarters.models.Cart;
 import com.firestarters.steps.CartPageSteps;
 import com.firestarters.steps.HomepageSteps;
 import com.firestarters.steps.ProductDetailsSteps;
@@ -10,10 +11,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.lang.reflect.InvocationTargetException;
+import java.sql.SQLOutput;
 
 @RunWith(SerenityRunner.class)
 public class Test001VerifyCart extends BaseTest {
-    @Steps
+    @Steps 
     private HomepageSteps homepageSteps;
     @Steps
     private ProductPageSteps productPageSteps;
@@ -24,23 +26,46 @@ public class Test001VerifyCart extends BaseTest {
 
     @Test
     public void test001VerifyCart() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+
         String firstProductName = "ELIZABETH KNIT TOP";
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
+        //cautam pe ui/front produsul cu numele firstProductName si dam click pe el
         productPageSteps.openProduct(firstProductName);
         productDetailsSteps.addDetailedProductToCart(2);
         cartPageSteps.verifyCartDetails();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
+        cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
         String secondProductName = "LAFAYETTE CONVERTIBLE DRESS";
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(secondProductName);
         productDetailsSteps.addDetailedProductToCart(2);
         cartPageSteps.verifyCartDetails();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
+        cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
         cartPageSteps.modifyProductQuantityFromCart(secondProductName, 4);
         cartPageSteps.verifyCartDetails();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
+        cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
         cartPageSteps.removeProductFromCart(firstProductName);
         cartPageSteps.verifyCartDetails();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
+        cartPageSteps.verifyMyAccountMyCartNrOfItems();
+
+        //assertul e false pentru ca in header la Cart(0) am tot timpul asa,indiferent de cate produse am in cart-deci e bug
+        cartPageSteps.verifyNrOfProductsFromHeaderCart();
+        //minicart
+        cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+        cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
+
+
+
+
+
+
+
 
     }
     //Hello

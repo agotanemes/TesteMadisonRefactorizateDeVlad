@@ -50,11 +50,14 @@ public class ProductDetailsSteps {
     //Agota 10.03.2020
     @Step
     public void addDetailedProductToCart(int quantity) {
+        //facem un cart product la care ii setam prop(culoare random, size random dintre cele available pentru culoarea respeciva...)
         CartProduct cartProduct = getDetailedProductInstanceFromUi(quantity);
+        //setam culoarea,size-ul si cantitatea produsului si pe ui,pe care le luam de la CartProduct-ul construit
         productDetailsPage.selectColor(cartProduct.getColor());
         productDetailsPage.selectSize(cartProduct.getSize());
         productDetailsPage.selectQty(Integer.toString(quantity));
         clickAddToCartButton();
+        //adaugam CartProduct-ul construit si pe sesiune
         SerenitySessionUtils.saveObjectInSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, cartProduct);
     }
 

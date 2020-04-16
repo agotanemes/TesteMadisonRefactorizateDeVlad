@@ -43,12 +43,7 @@ public class CartPageSteps {
     }
 
     //Agota 12.03.2020
-    @Step
-    public void verifyIfSubtotalIsCorrect() {
-        cartPage.verifyIfSubtotalIsCorrect();
-    }
 
-    //
 
     @Step
     public void verifyIfProductTableIsDisplayed() {
@@ -76,21 +71,6 @@ public class CartPageSteps {
     }
 
     @Step
-    public Cart getPricesThatComposeGrangTotal() {
-        Cart cart = cartPage.getPricesThatComposeGrangTotal();
-        double sum = cart.getSubtotal() + cart.getTax();
-        Double sumDouble = sum;
-        Double grandTotal = cart.getGrandTotal();
-        Assert.assertTrue(sumDouble.equals(grandTotal));
-        return cart;
-    }
-
-    @Step
-    public Cart calculatePricesThatComposeGrandTotal(double tax) {
-        return cartPage.calculatePricesThatComposeGrandTotal(tax);
-    }
-
-    @Step
     public void verifyTotals(Cart actual, Cart expected) {
         Double actualSubtotal = actual.getSubtotal();
         Double expectedSubtotal = expected.getSubtotal();
@@ -104,10 +84,11 @@ public class CartPageSteps {
     }
 
     @Step
-    public void verifyNrOfProductsFromCart() {
+    public void verifyNrOfProductsFromHeaderCart() {
 
         String nrprod = cartPage.getNrOfProductsFromCart();
-        Integer size = cartPage.getProducts().size();
+        Integer size = SerenitySessionUtils.getObjectListSize(SerenityKeyConstants.CART_PRODUCTS_LIST);
+        System.out.println("size-ul listei de produse de pe sediune: "+size);
         Integer nrProducts = Integer.parseInt(nrprod);
         Assert.assertFalse(size.equals(nrProducts));
     }
@@ -138,8 +119,9 @@ public class CartPageSteps {
     }
 
     @Step
-    public void verifyCartItemsAreEqualToNrAddedItems(List<CartProduct> product) {
-        int sum = cartPage.sumOfQtys(product);
+    public void verifyMyAccountMyCartNrOfItems() {
+        Cart expectedCart = getCartFromSession();
+        int sum = cartPage.sumOfQtys(expectedCart.getCartProducts());
         String nrOfItemsExp = cartPage.convertIntToString(sum);
         String accountTextAct = getMyCartText();
         assertTrue(accountTextAct.contains(nrOfItemsExp));
@@ -159,7 +141,9 @@ public class CartPageSteps {
 
     @Step
     public void modifyProductQuantityFromCart(String name, int newValue) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
+        //modificam cantitatea produsului pe front
         cartPage.modifyProductQtyFromCart(name, newValue);
+        //cautam pe sesiune produsul pe care vrem sa il modificam
         CartProduct modifiedCartProduct = getCartProductFromSessionByName(name);
         modifiedCartProduct.setQty(newValue);
         modifiedCartProduct.setSubtotal();
@@ -196,4 +180,42 @@ public class CartPageSteps {
         System.out.println("Actual cart is: " + actualCart.toString());
         Assert.assertTrue("Cart details are not as expected!", expectedCart.equals(actualCart));
     }
+    //minicart
+    @Step
+    public WebElement getMiniCart(){
+        return cartPage.getMiniCart();
+    }
+    @Step
+    public List<CartProduct> getMiniCartRecentlyAddedProd(){
+        return cartPage.getMiniCartRecentlyAddedProd();
+    }
+    @Step
+    public void checkIfFoundRecentlyAddedProdInCartList(){
+        Cart expectedCart = getCartFromSession();
+        List<CartProduct> productsfromSession=expectedCart.getCartProducts();
+        List<CartProduct> recentlyAddedProducts=getMiniCartRecentlyAddedProd();
+        int productsSize=productsfromSession.size();
+        int recentlyAddedProdListSize=recentlyAddedProducts.size();
+        int i=0;
+        int j=productsSize-1;
+        System.out.println("Begin");
+        while(recentlyAddedProdListSize>0){
+            //System.out.println("mini: "+searchedProducts.get(i).getQty()+" product "+products.get(j).getQty());
+            Assert.assertEquals(productsfromSession.get(j).getQty(),recentlyAddedProducts.get(i).getQty());
+            Assert.assertTrue(productsfromSession.get(j).getName().equals(recentlyAddedProducts.get(i).getName()));
+            Double price1= productsfromSession.get(j).getPrice();
+            Double price2=recentlyAddedProducts.get(i).getPrice();
+            //Assert.assertTrue(products.get(i).getProductPrice().equals(cartProducts.get(i).getProductPrice()));
+            Assert.assertTrue(price1.equals(price2));
+            Double subtotal1=productsfromSession.get(j).getSubtotal();
+            Double subtotal2=recentlyAddedProducts.get(i).getSubtotal();
+            Assert.assertTrue(subtotal1.equals(subtotal2));
+            recentlyAddedProdListSize=recentlyAddedProdListSize-1;
+            j=j-1;
+            i=i+1;
+
+
+        }
+    }
+
 }

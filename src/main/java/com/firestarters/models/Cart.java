@@ -1,6 +1,7 @@
 package com.firestarters.models;
 
 import com.firestarters.tools.utils.Constants;
+import org.decimal4j.util.DoubleRounder;
 
 import java.util.List;
 
@@ -27,12 +28,21 @@ public class Cart {
     }
 
     public double getSubtotal() {
-        this.subtotal = 0;
+       this.subtotal = 0;
         for (CartProduct cartProduct : cartProducts) {
             this.subtotal = this.subtotal + cartProduct.getSubtotal();
         }
-        return subtotal;
+        System.out.println("Subtotal !!!!"+subtotal);
+        return this.subtotal;
+      /* double subtotal=0;
+       for (CartProduct cartProduct:cartProducts){
+           subtotal=subtotal+cartProduct.getSubtotal();
+       }
+       return subtotal;*/
     }
+    /*public double getSubtotal(){
+        return this.subtotal;
+    }*/
 
     @Override
     public int hashCode() {
@@ -96,5 +106,10 @@ public class Cart {
 
     public void setGrandTotal(double grandTotal) {
         this.grandTotal = grandTotal;
+    }
+    public void setCalcTax() {
+        double tax=0.0825*this.subtotal;
+        double drounder= DoubleRounder.round(tax,2);
+        this.tax=drounder;
     }
 }
