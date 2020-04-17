@@ -93,7 +93,10 @@ public class Cart {
     }
 
     public double getTax() {
-        return this.subtotal * Constants.CART_TAX_RATE;
+        double tax=Constants.CART_TAX_RATE*this.subtotal;
+        double drounder= DoubleRounder.round(tax,2);
+        return drounder;
+        //return this.subtotal * Constants.CART_TAX_RATE;
     }
 
     public void setTax(double tax) {

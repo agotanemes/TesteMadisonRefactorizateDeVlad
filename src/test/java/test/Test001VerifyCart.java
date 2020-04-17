@@ -15,7 +15,7 @@ import java.sql.SQLOutput;
 
 @RunWith(SerenityRunner.class)
 public class Test001VerifyCart extends BaseTest {
-    @Steps 
+    @Steps
     private HomepageSteps homepageSteps;
     @Steps
     private ProductPageSteps productPageSteps;
@@ -29,7 +29,6 @@ public class Test001VerifyCart extends BaseTest {
 
         String firstProductName = "ELIZABETH KNIT TOP";
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
-        //cautam pe ui/front produsul cu numele firstProductName si dam click pe el
         productPageSteps.openProduct(firstProductName);
         productDetailsSteps.addDetailedProductToCart(2);
         cartPageSteps.verifyCartDetails();
@@ -40,6 +39,14 @@ public class Test001VerifyCart extends BaseTest {
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(secondProductName);
         productDetailsSteps.addDetailedProductToCart(2);
+        cartPageSteps.verifyCartDetails();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
+        cartPageSteps.verifyMyAccountMyCartNrOfItems();
+
+        String thirdProductName = "TORI TANK";
+        homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
+        productPageSteps.openProduct(thirdProductName);
+        productDetailsSteps.addDetailedProductToCart(1);
         cartPageSteps.verifyCartDetails();
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
@@ -59,6 +66,13 @@ public class Test001VerifyCart extends BaseTest {
         //minicart
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
+
+        //cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+        cartPageSteps.modifyProductQtyFromMiniCart("LAFAYETTE CONVERTIBLE DRESS","5");
+        webdriver.navigate().refresh();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
+        cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
+        cartPageSteps.verifyCartDetails();
 
 
 

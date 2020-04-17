@@ -9,6 +9,7 @@ import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
@@ -242,11 +243,12 @@ public class CartPage extends AbstractPage {
         List<WebElementFacade> productFromCart = getProductList();
         for (WebElementFacade prod : productFromCart) {
             String productName = prod.findElement(By.cssSelector(".product-name>a")).getText();
+            System.out.println("prod name:"+productName);
             if (productName.toLowerCase().contentEquals(name.toLowerCase())) {
                 prod.findElement(By.cssSelector("td[class='product-cart-actions']>input")).clear();
                 prod.findElement(By.cssSelector("td[class='product-cart-actions']>input")).sendKeys(Integer.toString(value));
                 prod.findElement(By.cssSelector("button[class='button btn-update']")).click();
-
+                break;
             }
 
         }
@@ -299,6 +301,22 @@ public class CartPage extends AbstractPage {
             miniCartProducts.add(cartProduct);
         }
         return miniCartProducts;
+    }
+    public void modifyProductQtyFromMiniCart(String name,String qty){
+        List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;
+        for(WebElement prod:miniCartProductsUi){
+            String prodName=prod.findElement(By.cssSelector(".product-name")).getText();
+            if(prodName.equals(name)){
+                //prod.findElement(By.cssSelector(".qty-wrapper>td>input")).clear();
+                WebElement inputfield=prod.findElement(By.cssSelector(".qty-wrapper>td>input"));
+                inputfield.sendKeys(Keys.chord(Keys.CONTROL, "a"), qty);
+                //withTimeoutOf(Duration.ofSeconds(30));
+                //prod.findElement(By.cssSelector(".qty-wrapper input")).sendKeys(qty);
+                clickOnWebElem(prod.findElement(By.cssSelector("button")));
+                break;
+            }
+        }
+
     }
 
 }

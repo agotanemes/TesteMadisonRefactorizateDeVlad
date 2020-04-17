@@ -217,5 +217,17 @@ public class CartPageSteps {
 
         }
     }
+    @Step
+    public void modifyProductQtyFromMiniCart(String name,String qty) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
+        cartPage.modifyProductQtyFromMiniCart(name,qty);
+        int quantity=Integer.parseInt(qty);
+        //cartPage.modifyProductQtyFromCart(name, quantity);
+        //cautam pe sesiune produsul pe care vrem sa il modificam
+        CartProduct modifiedCartProduct = getCartProductFromSessionByName(name);
+        modifiedCartProduct.setQty(quantity);
+        modifiedCartProduct.setSubtotal();
+        SerenitySessionUtils.replaceObjectInSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, modifiedCartProduct, "name",
+                name);
+    }
 
 }
