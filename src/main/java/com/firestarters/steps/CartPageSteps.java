@@ -229,5 +229,12 @@ public class CartPageSteps {
         SerenitySessionUtils.replaceObjectInSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, modifiedCartProduct, "name",
                 name);
     }
+    @Step
+    public void removeMiniCartProduct(String name){
+        cartPage.removeMiniCartProduct(name);
+        CartProduct removedCartProduct = getCartProductFromSessionByName(name);
+        SerenitySessionUtils.removeObjectFromSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, removedCartProduct);
+
+    }
 
 }

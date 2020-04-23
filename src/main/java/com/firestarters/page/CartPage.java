@@ -318,5 +318,20 @@ public class CartPage extends AbstractPage {
         }
 
     }
+    public void removeMiniCartProduct(String name){
+        List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;
+        System.out.println("mini cart added prod:"+ miniCartProductsUi.size());
+        for(WebElement prod:miniCartProductsUi) {
+            String prodName=prod.findElement(By.cssSelector(".product-name")).getText();
+            if(prodName.equals(name)){
+                System.out.println("intra in porcaria asta de if");
+                clickOnWebElem(prod.findElement(By.cssSelector("a[title='Remove This Item']")));
+                getDriver().switchTo().alert().accept();
+                waitABit(5000);
+                break;
+            }
+        }
+        waitABit(5000);
+    }
 
 }
