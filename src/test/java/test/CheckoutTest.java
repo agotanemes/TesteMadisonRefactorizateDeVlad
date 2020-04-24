@@ -27,5 +27,8 @@ public class CheckoutTest extends BaseTest {
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(firstProductName);
         productDetailsSteps.addDetailedProductToCart(2);
+        cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
+        checkoutSteps.selectCheckoutMethod();
+        checkoutSteps.selectContinue();
     }
 }
