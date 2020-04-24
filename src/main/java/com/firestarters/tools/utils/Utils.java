@@ -11,6 +11,8 @@ public class Utils {
         String s= RandomStringUtils.randomAlphabetic(6);
         return s;
     };
+
+
     public static String stringReplace(String s){
         //System.out.println(s);
         String s1=s.replace(" $US","").replace("$", "");

@@ -15,6 +15,25 @@ public class BillingInf {
     String telephone;
     String fax;
 
+    @Override
+    public String toString() {
+        return "BillingInf{" +
+                "firstN='" + firstN + '\'' +
+                ", middleN='" + middleN + '\'' +
+                ", lastN='" + lastN + '\'' +
+                ", company='" + company + '\'' +
+                ", emailAdr='" + emailAdr + '\'' +
+                ", address='" + address + '\'' +
+                ", streetAdr2='" + streetAdr2 + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zip='" + zip + '\'' +
+                ", country='" + country + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", fax='" + fax + '\'' +
+                '}';
+    }
+
     public String getFirstN() {
         return firstN;
     }
@@ -118,4 +137,5 @@ public class BillingInf {
     public void setFax(String fax) {
         this.fax = fax;
     }
+
 }

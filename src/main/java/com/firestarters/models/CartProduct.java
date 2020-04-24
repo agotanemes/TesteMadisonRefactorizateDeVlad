@@ -28,6 +28,9 @@ public class CartProduct {
     public void setSubtotal() {
         this.subtotal = this.price * this.qty;
     }
+    public void setSub(double subtotal){
+        this.subtotal=subtotal;
+    }
 
     public String getName() {
         return name;

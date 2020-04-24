@@ -1,5 +1,6 @@
 package test;
 
+import com.firestarters.models.BillingInf;
 import com.firestarters.steps.*;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -30,5 +31,9 @@ public class CheckoutTest extends BaseTest {
         cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
         checkoutSteps.selectCheckoutMethod();
         checkoutSteps.selectContinue();
+        checkoutSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
+        checkoutSteps.fillRequestedFieldsForShipping("Nemes","Agota","Str Petrisat Nr 212","Blaj","515400","075509627","Romania","Alba");
+        checkoutSteps.selectShippingMet();
+        checkoutSteps.verifyOrderReviewDetails();
     }
 }

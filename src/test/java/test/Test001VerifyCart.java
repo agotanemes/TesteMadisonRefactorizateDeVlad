@@ -1,10 +1,7 @@
 package test;
 
 import com.firestarters.models.Cart;
-import com.firestarters.steps.CartPageSteps;
-import com.firestarters.steps.HomepageSteps;
-import com.firestarters.steps.ProductDetailsSteps;
-import com.firestarters.steps.ProductPageSteps;
+import com.firestarters.steps.*;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Test;
@@ -23,6 +20,8 @@ public class Test001VerifyCart extends BaseTest {
     private ProductDetailsSteps productDetailsSteps;
     @Steps
     private CartPageSteps cartPageSteps;
+    @Steps
+    private CheckoutSteps checkoutSteps;
 
     @Test
     public void test001VerifyCart() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
@@ -80,13 +79,6 @@ public class Test001VerifyCart extends BaseTest {
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
         cartPageSteps.verifyCartDetails();
-
-
-
-
-
-
-
 
     }
     //Hello
