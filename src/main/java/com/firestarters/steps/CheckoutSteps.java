@@ -7,10 +7,12 @@ import com.firestarters.page.CheckoutPage;
 import com.firestarters.tools.utils.SerenityKeyConstants;
 import com.firestarters.tools.utils.SerenitySessionUtils;
 import net.thucydides.core.annotations.Step;
+import net.thucydides.core.annotations.Steps;
 import org.junit.Assert;
 
 public class CheckoutSteps {
     CheckoutPage checkoutPage;
+    @Steps
     CartPageSteps cartPageSteps;
     @Step
     public void selectCheckoutMethod(){

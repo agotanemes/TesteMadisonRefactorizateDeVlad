@@ -9,6 +9,8 @@ import org.junit.runner.RunWith;
 
 import java.lang.reflect.InvocationTargetException;
 
+import static com.firestarters.factory.BillingInfFactory.getBillingInfInstance;
+
 @RunWith(SerenityRunner.class)
 public class CheckoutTest extends BaseTest {
     @Steps
@@ -35,6 +37,9 @@ public class CheckoutTest extends BaseTest {
         checkoutSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
         checkoutSteps.fillRequestedFieldsForShipping("Nemes","Agota","Str Petrisat Nr 212","Blaj","515400","075509627","Romania","Alba");
         checkoutSteps.selectShippingMet();
-        checkoutSteps.verifyOrderReviewDetails();
+        BillingInf billingInf=getBillingInfInstance();
+        System.out.println(billingInf);
+        //TO DO
+        //checkoutSteps.verifyOrderReviewDetails();
     }
 }

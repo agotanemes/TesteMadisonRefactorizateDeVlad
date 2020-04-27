@@ -7,10 +7,15 @@ import static org.apache.commons.lang3.RandomStringUtils.*;
 
 public class Utils {
     //generate random string
-    public static String getRandomString(){
-        String s= RandomStringUtils.randomAlphabetic(6);
+    public static String getRandomString(int length){
+        String s= RandomStringUtils.randomAlphabetic(length);
+
         return s;
     };
+    public static String getRandomNumber(int size){
+        String st=RandomStringUtils.randomNumeric(size);
+        return st;
+    }
 
 
     public static String stringReplace(String s){
@@ -67,6 +72,8 @@ public class Utils {
         System.out.println((splitStringByComma(bycomma)).length);
         String[] splitcomma=splitStringByComma(bycomma);
         System.out.println(splitcomma[0].length());
+        String st=RandomStringUtils.randomNumeric(10);
+        System.out.println(st);
 
     }
     public static String[] splitByEnter(String s){
