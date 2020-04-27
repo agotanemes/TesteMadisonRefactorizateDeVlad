@@ -80,6 +80,15 @@ public class Test001VerifyCart extends BaseTest {
         cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
         cartPageSteps.verifyCartDetails();
 
+        //checkout
+        webdriver.navigate().refresh();
+        cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
+        checkoutSteps.selectCheckoutMethod();
+        checkoutSteps.selectContinue();
+        checkoutSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
+        checkoutSteps.fillRequestedFieldsForShipping("Nemes","Agota","Str Petrisat Nr 212","Blaj","515400","075509627","Romania","Alba");
+        checkoutSteps.selectShippingMet();
+        checkoutSteps.verifyOrderReviewDetails();
     }
     //Hello
 }
