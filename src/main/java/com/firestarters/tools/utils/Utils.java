@@ -51,7 +51,7 @@ public class Utils {
         String[] splited=str.split(",");
         return splited;
    }
-   public static String eliminateStaces(String s){
+   public static String eliminateSpaces(String s){
         return s.replace(" ","");
    }
 

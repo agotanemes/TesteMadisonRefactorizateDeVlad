@@ -77,68 +77,66 @@ public class CheckoutPage extends AbstractPage {
         return getDriver().findElement(By.cssSelector("li.active input[title='" + title + "']"));
     }
 
-    public BillingInf fillRequestedFieldsForBilling(String firstN, String middleN, String lastN, String email, String adress, String city, String zip, String tel, String country, String state){
-        getInputByTitle("First Name").sendKeys(firstN);
-        getInputByTitle("Middle Name/Initial").sendKeys(middleN);
-        getInputByTitle("Last Name").sendKeys(lastN);
-        getInputByTitle("Email Address").sendKeys(email);
-        getInputByTitle("Street Address").sendKeys(adress);
-        getInputByTitle("City").sendKeys(city);
-        getInputByTitle("Zip/Postal Code").sendKeys(zip);
-        getInputByTitle("Telephone").sendKeys(tel);
+    public void fillRequestedFieldsForBilling(BillingInf b){
+        getInputByTitle("First Name").sendKeys(b.getFirstN());
+        getInputByTitle("Middle Name/Initial").sendKeys(b.getMiddleN());
+        getInputByTitle("Last Name").sendKeys(b.getLastN());
+        getInputByTitle("Email Address").sendKeys(b.getEmailAdr());
+        getInputByTitle("Street Address").sendKeys(b.getAddress());
+        getInputByTitle("City").sendKeys(b.getCity());
+        getInputByTitle("Zip/Postal Code").sendKeys(b.getZip());
+        getInputByTitle("Telephone").sendKeys(b.getTelephone());
         clickOnWebElem(countryDropdown);
         Select countrySelect = new Select(countryDropdown);
-        countrySelect.selectByVisibleText(country);
+        countrySelect.selectByVisibleText(b.getCountry());
         clickOnWebElem(stateDropdown);
         Select stateSelect = new Select(stateDropdown);
-        stateSelect.selectByVisibleText(state);
+        stateSelect.selectByVisibleText(b.getState());
         clickOnWebElem(shippingToThisAddressRadioBtn);
         clickOnWebElem(billingTabContinueButton);
         //waitFor(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#shipping\\:firstname")));
         //withTimeoutOf(Duration.ofSeconds(60)).waitFor(shippingFirstNameLabel);
         waitForWebElem(shippingFirstNameLabel);
-        BillingInf billingInf=new BillingInf();
-        billingInf.setFirstN(firstN);
-        billingInf.setMiddleN(middleN);
-        billingInf.setLastN(lastN);
-        billingInf.setEmailAdr(email);
-        billingInf.setAddress(adress);
-        billingInf.setCity(city);
-        billingInf.setZip(eliminateStaces(zip));
-        billingInf.setTelephone(tel);
-        billingInf.setCountry(country);
-        billingInf.setState(eliminateStaces(state));
-        SerenitySessionUtils.saveObjectInSerenitySessionList(SerenityKeyConstants.BILLING_INF, billingInf);
-        return billingInf;
+        /*BillingInf billingInf=new BillingInf();
+        billingInf.setFirstN(b.getFirstN());
+        billingInf.setMiddleN(b.getMiddleN());
+        billingInf.setLastN(b.getLastN());
+        billingInf.setEmailAdr(b.getEmailAdr());
+        billingInf.setAddress(b.getAddress());
+        billingInf.setCity(b.getCity());
+        billingInf.setZip(eliminateSpaces(b.getZip()));
+        billingInf.setTelephone(b.getTelephone());
+        billingInf.setCountry(b.getCountry());
+        billingInf.setState(eliminateSpaces(b.getState()));*/
     }
-    public ShippingInform fillRequestedFieldsForShipping(String firstN, String lastN, String strAddr, String city, String zip, String tel, String country, String state){
+    public void fillRequestedFieldsForShipping(ShippingInform s){
         //complete the fields
-        getInputByTitle("First Name").sendKeys(firstN);
-        getInputByTitle("Last Name").sendKeys(lastN);
-        getInputByTitle("Street Address").sendKeys(strAddr);
-        getInputByTitle("City").sendKeys(city);
-        getInputByTitle("Zip/Postal Code").sendKeys(zip);
-        getInputByTitle("Telephone").sendKeys(tel);
+        getInputByTitle("First Name").sendKeys(s.getFirstName());
+        getInputByTitle("Last Name").sendKeys(s.getLastName());
+        getInputByTitle("Street Address").sendKeys(s.getStreetAddr());
+        getInputByTitle("City").sendKeys(s.getCity());
+        getInputByTitle("Zip/Postal Code").sendKeys(s.getZip());
+        getInputByTitle("Telephone").sendKeys(s.getTelephone());
         clickOnWebElem(shippingConuntryDropdown);
         Select shippingCountrySelect = new Select(shippingConuntryDropdown);
-        shippingCountrySelect.selectByVisibleText(country);
+        shippingCountrySelect.selectByVisibleText(s.getCountry());
         clickOnWebElem(shippingStateDropdown);
         Select shippingStateSelect = new Select(shippingStateDropdown);
-        shippingStateSelect.selectByVisibleText(state);
+        shippingStateSelect.selectByVisibleText(s.getState());
         //set the shiping inf in the shipininf obj.
-        ShippingInform shippingInform=new ShippingInform();
-        shippingInform.setFirstName(firstN);
-        shippingInform.setLastName(lastN);
-        shippingInform.setStreetAddr(strAddr);
-        shippingInform.setCity(city);
-        shippingInform.setZip(zip);
-        shippingInform.setTelephone(tel);
-        shippingInform.setCountry(country);
-        shippingInform.setState(state);
+        /*ShippingInform shippingInform=new ShippingInform();
+        shippingInform.setFirstName(s.getFirstName());
+        shippingInform.setLastName(s.getLastName());
+        shippingInform.setStreetAddr(s.getStreetAddr());
+        shippingInform.setCity(s.getCity());
+        shippingInform.setZip(s.getZip());
+        shippingInform.setTelephone(s.getTelephone());
+        shippingInform.setCountry(s.getCountry());
+        shippingInform.setState(s.getState());*/
         shippingTabContinueButton.click();
         //withTimeoutOf(Duration.ofSeconds(15)).waitFor(flatRateLabel);
-        waitForWebElem(flatRateLabel);
-        return shippingInform;
+         waitForWebElem(flatRateLabel);
+
     }
     public void selectShippingMet(){
         clickOnWebElem(shippingMethodRadioButton);

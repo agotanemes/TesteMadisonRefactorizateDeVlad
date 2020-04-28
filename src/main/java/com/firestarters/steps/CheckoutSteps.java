@@ -24,15 +24,15 @@ public class CheckoutSteps {
         checkoutPage.clickOnWebElem(checkoutPage.getContinueBtn());
     }
     @Step
-    public void fillRequestedFieldsForBilling(String firstN, String middleN, String lastN, String email, String adress, String city, String zip, String tel, String country, String state){
-        BillingInf billingInf=checkoutPage.fillRequestedFieldsForBilling(firstN,middleN,lastN,email,adress,city,zip,tel,country,state);
-        SerenitySessionUtils.saveObjectInSerenitySessionList(SerenityKeyConstants.BILLING_INF, billingInf);
+    public void fillRequestedFieldsForBilling(BillingInf b){
+        checkoutPage.fillRequestedFieldsForBilling(b);
+        SerenitySessionUtils.saveObjectInSerenitySessionList(SerenityKeyConstants.BILLING_INF, b);
 
     }
     @Step
-    public void fillRequestedFieldsForShipping(String firstN, String lastN, String strAddr, String city, String zip, String tel, String country, String state){
-        ShippingInform shippingInform=checkoutPage.fillRequestedFieldsForShipping(firstN,lastN,strAddr,city,zip,tel,country,state);
-        SerenitySessionUtils.saveObjectInSerenitySessionList(SerenityKeyConstants.SHIPPING_INF, shippingInform);
+    public void fillRequestedFieldsForShipping(ShippingInform s){
+        checkoutPage.fillRequestedFieldsForShipping(s);
+        SerenitySessionUtils.saveObjectInSerenitySessionList(SerenityKeyConstants.SHIPPING_INF, s);
 
     }
     @Step

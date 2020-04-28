@@ -1,6 +1,7 @@
 package test;
 
 import com.firestarters.models.BillingInf;
+import com.firestarters.models.ShippingInform;
 import com.firestarters.steps.*;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
@@ -10,6 +11,7 @@ import org.junit.runner.RunWith;
 import java.lang.reflect.InvocationTargetException;
 
 import static com.firestarters.factory.BillingInfFactory.getBillingInfInstance;
+import static com.firestarters.factory.ShippingInformFactory.getShippingInformInstance;
 
 @RunWith(SerenityRunner.class)
 public class CheckoutTest extends BaseTest {
@@ -34,12 +36,13 @@ public class CheckoutTest extends BaseTest {
         cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
         checkoutSteps.selectCheckoutMethod();
         checkoutSteps.selectContinue();
-        checkoutSteps.fillRequestedFieldsForBilling("Nemes","Melinda","Agota","agotanemes96@gmail.com","Str Petrisat nr 212","Blaj","515400","0755096274","Romania","Alba");
-        checkoutSteps.fillRequestedFieldsForShipping("Nemes","Agota","Str Petrisat Nr 212","Blaj","515400","075509627","Romania","Alba");
-        checkoutSteps.selectShippingMet();
         BillingInf billingInf=getBillingInfInstance();
-        System.out.println(billingInf);
-        //TO DO
+        checkoutSteps.fillRequestedFieldsForBilling(billingInf);
+        ShippingInform shippingInform=getShippingInformInstance();
+        checkoutSteps.fillRequestedFieldsForShipping(shippingInform);
+        checkoutSteps.selectShippingMet();
+
+        //TO DO-lists are not equal
         //checkoutSteps.verifyOrderReviewDetails();
     }
 }
