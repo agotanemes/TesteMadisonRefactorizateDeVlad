@@ -64,6 +64,8 @@ public class CheckoutPage extends AbstractPage {
     private WebElement orderReviewHeader;
     @FindBy(css="#billing-progress-opcheckout>dd[class='complete']>address")
     private WebElement billingCompletedInf;
+    @FindBy(css="#shipping-progress-opcheckout>dd[class='complete']>address")
+    private WebElement shippingCompletedInf;
 
     public void clickOnWebElem(WebElement element){
         element.click();
@@ -229,6 +231,44 @@ public class CheckoutPage extends AbstractPage {
         billingInf.setTelephone(tel);
         return billingInf;
     }
+    public String getShippingCompletedInf(){
+        return shippingCompletedInf.getText();
+    }
+    public ShippingInform getShippingCompletedInfAsObj(){
+        ShippingInform shippingInf=new ShippingInform();
+        String shippingInfStr=getShippingCompletedInf();
+        String[] billingInfComp=splitByEnter(shippingInfStr);
+
+        String firstNAndMidNAndLastN=billingInfComp[0];
+        String[] text1=splitStringBySpace(firstNAndMidNAndLastN);
+        String fName=text1[0];
+        String lName=text1[1];
+
+        String adress=billingInfComp[1];
+
+        String cityStateAndZip=billingInfComp[2];
+        String[] text2=splitStringByComma(cityStateAndZip);
+        String city=text2[0];
+        String state=text2[1];
+        String zip=text2[2].replace(" ","");
+
+        String country=billingInfComp[3];
+
+        String telephone=billingInfComp[4];
+        String tel=extractNumberFromStrinAsString(telephone);
+
+        shippingInf.setFirstName(fName);
+        shippingInf.setLastName(lName);
+        shippingInf.setState(eliminateSpaces(state));
+        shippingInf.setCountry(country);
+        shippingInf.setCity(city);
+        shippingInf.setStreetAddr(adress);
+        shippingInf.setZip(zip);
+        shippingInf.setTelephone(tel);
+        return shippingInf;
+
+    }
+
 
 
 }

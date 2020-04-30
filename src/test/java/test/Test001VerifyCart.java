@@ -30,7 +30,7 @@ public class Test001VerifyCart extends BaseTest {
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(firstProductName);
         productDetailsSteps.addDetailedProductToCart(2);
-        cartPageSteps.verifyCartDetails();
+        cartPageSteps. verifyCartDetails();
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
 

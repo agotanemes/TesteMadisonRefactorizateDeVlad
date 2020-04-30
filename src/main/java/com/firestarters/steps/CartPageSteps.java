@@ -119,9 +119,10 @@ public class CartPageSteps {
         return cartPage.getMyCartText();
     }
 
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @Step
     public void verifyMyAccountMyCartNrOfItems() {
-        Cart expectedCart = getCartFromSession();
+        Cart expectedCart = new Cart(SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST));
         int sum = cartPage.sumOfQtys(expectedCart.getCartProducts());
         String nrOfItemsExp = cartPage.convertIntToString(sum);
         String accountTextAct = getMyCartText();
@@ -168,10 +169,11 @@ public class CartPageSteps {
         CartProduct removedCartProduct = getCartProductFromSessionByName(name);
         SerenitySessionUtils.removeObjectFromSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, removedCartProduct);
     }
-
+//!!!!!!!!!!!!!!!!!!!!!!!!!!
     @Step
     public void verifyCartDetails() {
-        Cart expectedCart = getCartFromSession();
+        Cart expectedCart = new Cart(SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST));
+                //getCartFromSession();
         Cart actualCart = new Cart();
         actualCart.setCartProducts(cartPage.getProducts());
         actualCart.setGrandTotal(cartPage.totalPriceAsDouble());
@@ -190,9 +192,11 @@ public class CartPageSteps {
     public List<CartProduct> getMiniCartRecentlyAddedProd(){
         return cartPage.getMiniCartRecentlyAddedProd();
     }
+    //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     @Step
     public void checkIfFoundRecentlyAddedProdInCartList(){
-        Cart expectedCart = getCartFromSession();
+        Cart expectedCart = new Cart(SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST));
+                //getCartFromSession();
         List<CartProduct> productsfromSession=expectedCart.getCartProducts();
         List<CartProduct> recentlyAddedProducts=getMiniCartRecentlyAddedProd();
         int productsSize=productsfromSession.size();

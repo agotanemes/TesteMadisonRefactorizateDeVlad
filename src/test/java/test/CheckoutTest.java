@@ -41,8 +41,8 @@ public class CheckoutTest extends BaseTest {
         ShippingInform shippingInform=getShippingInformInstance();
         checkoutSteps.fillRequestedFieldsForShipping(shippingInform);
         checkoutSteps.selectShippingMet();
-        //aici !!!!
-        BillingInf b=checkoutSteps.getBillingInfFromSession();
+        checkoutSteps.verifyBillingDetails();
+        checkoutSteps.verifyShippingDetails();
 
         //TO DO-lists are not equal
         //checkoutSteps.verifyOrderReviewDetails();

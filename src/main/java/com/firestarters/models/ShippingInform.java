@@ -1,5 +1,7 @@
 package com.firestarters.models;
 
+import java.util.Objects;
+
 public class ShippingInform {
     String firstName;
     String lastName;
@@ -9,6 +11,26 @@ public class ShippingInform {
     String telephone;
     String state;
     String country;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ShippingInform that = (ShippingInform) o;
+        return firstName.equals(that.firstName) &&
+                lastName.equals(that.lastName) &&
+                streetAddr.equals(that.streetAddr) &&
+                city.equals(that.city) &&
+                zip.equals(that.zip) &&
+                telephone.equals(that.telephone) &&
+                state.equals(that.state) &&
+                country.equals(that.country);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, streetAddr, city, zip, telephone, state, country);
+    }
 
     public String getState() {
         return state;

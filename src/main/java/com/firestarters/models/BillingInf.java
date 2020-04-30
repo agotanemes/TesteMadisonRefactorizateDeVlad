@@ -1,10 +1,34 @@
 package com.firestarters.models;
 
+import java.util.Objects;
+
 public class BillingInf {
     String firstN;
     String middleN;
     String lastN;
     String company;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BillingInf that = (BillingInf) o;
+        return Objects.equals(firstN, that.firstN) &&
+                Objects.equals(middleN, that.middleN) &&
+                Objects.equals(lastN, that.lastN) &&
+                Objects.equals(address, that.address) &&
+                Objects.equals(city, that.city) &&
+                Objects.equals(state, that.state) &&
+                Objects.equals(zip, that.zip) &&
+                Objects.equals(country, that.country) &&
+                Objects.equals(telephone, that.telephone);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstN, middleN, lastN, address, city, state, zip, country, telephone);
+    }
+
     String emailAdr;
     String address;
     String streetAdr2;
