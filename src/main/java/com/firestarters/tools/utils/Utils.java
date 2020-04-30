@@ -55,6 +55,7 @@ public class Utils {
         return s.replace(" ","");
    }
 
+
     public static void main(String[] args) {
         String stringToStrip="radius: -0.118,$211 zone";
         extractNumberFromString(stringToStrip);

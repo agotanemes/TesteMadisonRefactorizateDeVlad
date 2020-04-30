@@ -48,4 +48,14 @@ public class CheckoutSteps {
         System.out.println("Actual cart is: " + actualCart.toString());
         Assert.assertTrue("Cart details are not as expected!", expectedCart.equals(actualCart));
     }
+    @Step
+    public BillingInf getBillingInfFromSession() {
+        BillingInf billingInf = SerenitySessionUtils.getFromSession(SerenityKeyConstants.BILLING_INF);
+        System.out.println("Cart from session: "+billingInf);
+        return billingInf;
+    }
+    @Step
+    public void verifyBillingInf(){
+
+    }
 }

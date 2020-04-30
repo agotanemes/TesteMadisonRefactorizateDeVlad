@@ -25,7 +25,7 @@ public class CartPageSteps {
         assertEquals(expectedSize, cartPage.getNumberOfElementsFromCartProductsList());
         cartPage.proceedToCheckout();
     }
-
+    @Step
     public Cart getCartFromSession() {
         Cart cart = new Cart(SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST));
         System.out.println("Cart from session: "+cart);

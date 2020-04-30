@@ -15,6 +15,11 @@ public class BillingInf {
     String telephone;
     String fax;
 
+
+    public BillingInf(){
+
+    }
+
     @Override
     public String toString() {
         return "BillingInf{" +

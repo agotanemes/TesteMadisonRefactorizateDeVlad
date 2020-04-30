@@ -62,6 +62,8 @@ public class CheckoutPage extends AbstractPage {
     private List<WebElement> orderReviewProducts;
     @FindBy(css="tr[class='first last']")
     private WebElement orderReviewHeader;
+    @FindBy(css="#billing-progress-opcheckout>dd[class='complete']>address")
+    private WebElement billingCompletedInf;
 
     public void clickOnWebElem(WebElement element){
         element.click();
@@ -185,6 +187,47 @@ public class CheckoutPage extends AbstractPage {
         cart.setTax(dTax);
         cart.setSubtotal(dSubtotal);
         return cart;
+    }
+
+    //Billing completed information from right side
+    public String getBillingCompletedInf(){
+        String s=billingCompletedInf.getText();
+        return s;
+    }
+    public BillingInf getBillingCompletedInfAsObj(){
+        BillingInf billingInf=new BillingInf();
+        String billingInfStr=getBillingCompletedInf();
+        String[] billingInfComp=splitByEnter(billingInfStr);
+
+        String firstNAndMidNAndLastN=billingInfComp[0];
+        String[] text1=splitStringBySpace(firstNAndMidNAndLastN);
+        String fName=text1[0];
+        String mName=text1[1];
+        String lName=text1[2];
+
+        String adress=billingInfComp[1];
+
+        String cityStateAndZip=billingInfComp[2];
+        String[] text2=splitStringByComma(cityStateAndZip);
+        String city=text2[0];
+        String state=text2[1];
+        String zip=text2[2].replace(" ","");
+
+        String country=billingInfComp[3];
+
+        String telephone=billingInfComp[4];
+        String tel=extractNumberFromStrinAsString(telephone);
+
+        billingInf.setFirstN(fName);
+        billingInf.setMiddleN(mName);
+        billingInf.setLastN(lName);
+        billingInf.setState(eliminateSpaces(state));
+        billingInf.setCountry(country);
+        billingInf.setCity(city);
+        billingInf.setAddress(adress);
+        billingInf.setZip(zip);
+        billingInf.setTelephone(tel);
+        return billingInf;
     }
 
 
