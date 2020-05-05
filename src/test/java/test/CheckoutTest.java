@@ -32,8 +32,13 @@ public class CheckoutTest extends BaseTest {
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(firstProductName);
         productDetailsSteps.addDetailedProductToCart(2);
-        cartPageSteps.verifyCartDetails();
-        cartPageSteps.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
+
+        String secondProductName = "LAFAYETTE CONVERTIBLE DRESS";
+        homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
+        productPageSteps.openProduct(secondProductName);
+        productDetailsSteps.addDetailedProductToCart(2);
+
+        checkoutSteps.clickProceedToCheckoutBtn();
         checkoutSteps.selectCheckoutMethod();
         checkoutSteps.selectContinue();
         BillingInf billingInf=getBillingInfInstance();
@@ -43,8 +48,8 @@ public class CheckoutTest extends BaseTest {
         checkoutSteps.selectShippingMet();
         checkoutSteps.verifyBillingDetails();
         checkoutSteps.verifyShippingDetails();
+        checkoutSteps.verifyOrderReviewCartProdDetails();
+        checkoutSteps.clickPlaceOrder();
 
-        //TO DO-lists are not equal
-        //checkoutSteps.verifyOrderReviewDetails();
     }
 }

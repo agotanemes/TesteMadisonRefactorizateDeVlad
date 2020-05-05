@@ -11,6 +11,19 @@ public class ShippingInform {
     String telephone;
     String state;
     String country;
+    @Override
+    public String toString() {
+        return "ShippingInform{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", streetAddr='" + streetAddr + '\'' +
+                ", city='" + city + '\'' +
+                ", zip='" + zip + '\'' +
+                ", telephone='" + telephone + '\'' +
+                ", state='" + state + '\'' +
+                ", country='" + country + '\'' +
+                '}';
+    }
 
     @Override
     public boolean equals(Object o) {

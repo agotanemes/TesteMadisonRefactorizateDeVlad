@@ -13,6 +13,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +67,9 @@ public class CheckoutPage extends AbstractPage {
     private WebElement billingCompletedInf;
     @FindBy(css="#shipping-progress-opcheckout>dd[class='complete']>address")
     private WebElement shippingCompletedInf;
+
+    @FindBy(css = "button[title*='Place']")
+    private WebElementFacade placeOrderButton;
 
     public void clickOnWebElem(WebElement element){
         element.click();
@@ -267,6 +271,10 @@ public class CheckoutPage extends AbstractPage {
         shippingInf.setTelephone(tel);
         return shippingInf;
 
+    }
+    public void clickPlaceOrder(){
+        clickOnWebElem(placeOrderButton);
+        withTimeoutOf(Duration.ofSeconds(10));
     }
 
 
