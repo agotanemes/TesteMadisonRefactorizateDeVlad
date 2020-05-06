@@ -1,17 +1,17 @@
 package test;
 
-import com.firestarters.models.BillingInf;
-import com.firestarters.models.ShippingInform;
-import com.firestarters.steps.*;
+import com.firestarters.steps.CartPageSteps;
+import com.firestarters.steps.CheckoutSteps;
+import com.firestarters.steps.HomepageSteps;
+import com.firestarters.steps.ProductDetailsSteps;
+import com.firestarters.steps.ProductPageSteps;
+import com.firestarters.tools.utils.Constants;
+
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.lang.reflect.InvocationTargetException;
-
-import static com.firestarters.factory.BillingInfFactory.getBillingInfInstance;
-import static com.firestarters.factory.ShippingInformFactory.getShippingInformInstance;
 
 @RunWith(SerenityRunner.class)
 public class CheckoutTest extends BaseTest {
@@ -27,7 +27,7 @@ public class CheckoutTest extends BaseTest {
     ProductDetailsSteps productDetailsSteps;
 
     @Test
-    public void checkoutTest() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException{
+    public void checkoutTest() {
         String firstProductName = "ELIZABETH KNIT TOP";
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(firstProductName);
@@ -39,12 +39,18 @@ public class CheckoutTest extends BaseTest {
         productDetailsSteps.addDetailedProductToCart(2);
 
         checkoutSteps.clickProceedToCheckoutBtn();
-        checkoutSteps.selectCheckoutMethod();
-        checkoutSteps.selectContinue();
-        BillingInf billingInf=getBillingInfInstance();
-        checkoutSteps.fillRequestedFieldsForBilling(billingInf);
-        ShippingInform shippingInform=getShippingInformInstance();
-        checkoutSteps.fillRequestedFieldsForShipping(shippingInform);
+        checkoutSteps.selectCheckoutMethodAndContinue(Constants.CHECKOUT_METHOD_AS_GUEST);
+
+        //TO DO nu e nevoie musai de pas separat, l-am inclus in selectCheckoutMethodAndContinue
+        //checkoutSteps.selectContinue();
+        //TO DO instance in step chemam doar, ca salvam pe sesiune si ne luam de acolo in pasii de verificare
+        //BillingInf billingInf = getBillingInfInstance();
+        //checkoutSteps.fillRequestedFieldsForBilling(billingInf);
+        checkoutSteps.fillRequestedFieldsForBilling();
+        //TO DO la fel ca la billing
+        //ShippingInform shippingInform = getShippingInformInstance();
+        //checkoutSteps.fillRequestedFieldsForShipping(shippingInform);
+        checkoutSteps.fillRequestedFieldsForShipping();
         checkoutSteps.selectShippingMet();
         checkoutSteps.verifyBillingDetails();
         checkoutSteps.verifyShippingDetails();
