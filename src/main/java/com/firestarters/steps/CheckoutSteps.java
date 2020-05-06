@@ -24,31 +24,21 @@ public class CheckoutSteps {
     @Steps
     CartPageSteps cartPageSteps;
 
-    //TODOam pus in acelasi pas, cumva in teste cabd alegi checkout method si dai continue, sper sa nu ma insel
+
     @Step
     public void selectCheckoutMethodAndContinue(String name) {
         checkoutPage.clickOnWebElemWithText(name);
         checkoutPage.clickOnWebElemWithText(Constants.TEXT_BUTTON_CONTINUE);
-        //TO DO nu e nevoie
-        //checkoutPage.selectCheckoutMethod();
     }
 
     @Step
     public void clickProceedToCheckoutBtn() {
         checkoutPage.clickOnWebElemWithText(Constants.TEXT_BUTTON_PROCEED_TO_CHECKOUT);
-        //TO DO nu e nevoie
-        //checkoutPage.clickOnWebElem(cartPageSteps.getProceedToCheckoutBtn());
+
     }
 
-    //TO DO nu e nevoie
-    //    @Step
-    //    public void selectContinue() {
-    //        checkoutPage.clickOnWebElem(checkoutPage.getContinueBtn());
-    //    }
 
     @Step
-    //TO DO nu facem instance in test, deci nu avem nevoie in metode de steps
-    //    public void fillRequestedFieldsForBilling(BillingInf billingInf) {
     public void fillRequestedFieldsForBilling() {
         BillingInf billingInf = BillingInfFactory.getBillingInfInstance();
         checkoutPage.fillRequestedFieldsForBilling(billingInf);
@@ -57,9 +47,6 @@ public class CheckoutSteps {
     }
 
     @Step
-    //TO DO nu facem instance in test, deci nu avem nevoie in metode de steps
-    //    public void fillRequestedFieldsForShipping(ShippingInform shippingInform) {
-    //        checkoutPage.fillRequestedFieldsForShipping(shippingInform);
     public void fillRequestedFieldsForShipping() {
         ShippingInform shippingInform = ShippingInformFactory.getShippingInformInstance();
         checkoutPage.fillRequestedFieldsForShipping(shippingInform);
@@ -92,11 +79,7 @@ public class CheckoutSteps {
             Double actSubtotal = actualCartProdList.get(i).getSubtotal();
             Assert.assertTrue(expSubtotal.equals(actSubtotal));
         }
-        /*
-         * System.out.println("Expected cart is: " + expectedCart.toString()); System.out.println("Actual cart is: " + actualCart.toString());
-         *
-         * Assert.assertTrue("Cart details are not as expected!", expectedCart.equals(actualCart));
-         */
+
     }
 
     @Step

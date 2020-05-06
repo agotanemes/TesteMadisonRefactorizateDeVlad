@@ -24,7 +24,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CheckoutPage extends AbstractPage {
+public class CheckoutPage extends GeneralPage {
     //@FindBy(css = "input[id='login:guest']")
     //private WebElementFacade asGuestRadioButton;
     //@FindBy(css = "#onepage-guest-register-button")
@@ -72,21 +72,6 @@ public class CheckoutPage extends AbstractPage {
     @FindBy(css = "#shipping-progress-opcheckout>dd[class='complete']>address")
     private WebElement shippingCompletedInf;
 
-    //@FindBy(css = "button[title*='Place']")
-    //private WebElementFacade placeOrderButton;
-
-    //TO DO nu avem nevoie de metoda cu parametru element doar sa dam un click
-    //    public void clickOnWebElem(WebElement element){
-    //        element.click();
-    //    }
-    //    public WebElement getAsGuestRadioBtn() {
-    //        return asGuestRadioButton;
-    //    }
-
-    //    public WebElement getContinueBtn() {
-    //        return continueButton;
-    //    }
-
     public WebElement getInputByTitle(String title) {
         return getDriver().findElement(By.cssSelector("li.active input[title='" + title + "']"));
     }
@@ -100,31 +85,13 @@ public class CheckoutPage extends AbstractPage {
         getInputByTitle("City").sendKeys(b.getCity());
         getInputByTitle("Zip/Postal Code").sendKeys(b.getZip());
         getInputByTitle("Telephone").sendKeys(b.getTelephone());
-        //        clickOnWebElem(countryDropdown);
-        //        Select countrySelect = new Select(countryDropdown);
-        //        countrySelect.selectByVisibleText(b.getCountry());
         countryDropdown.selectByVisibleText(b.getCountry());
-        //        clickOnWebElem(stateDropdown);
-        //        Select stateSelect = new Select(stateDropdown);
-        //        stateSelect.selectByVisibleText(b.getState());
         stateDropdown.selectByVisibleText(b.getState());
-
-        //        clickOnWebElem(shippingToThisAddressRadioBtn);
         clickOnWebElemWithText(Constants.SHIP_TO_DIFFERENT_ADDRESS);
-        //        clickOnWebElem(billingTabContinueButton);
         clickOnWebElemWithText(Constants.TEXT_BUTTON_CONTINUE);
-        //waitFor(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#shipping\\:firstname")));
-        //        withTimeoutOf(Duration.ofSeconds(60)).waitFor(shippingFirstNameLabel);
-        /*
-         * BillingInf billingInf=new BillingInf(); billingInf.setFirstN(b.getFirstN()); billingInf.setMiddleN(b.getMiddleN());
-         * billingInf.setLastN(b.getLastN()); billingInf.setEmailAdr(b.getEmailAdr()); billingInf.setAddress(b.getAddress()); billingInf.setCity(b.getCity());
-         * billingInf.setZip(eliminateSpaces(b.getZip())); billingInf.setTelephone(b.getTelephone()); billingInf.setCountry(b.getCountry());
-         * billingInf.setState(eliminateSpaces(b.getState()));
-         */
     }
 
     public void fillRequestedFieldsForShipping(ShippingInform s) {
-        //complete the fields
         waitForWebElemToAppear(shippingFirstNameLabel);
         getInputByTitle("First Name").sendKeys(s.getFirstName());
         getInputByTitle("Last Name").sendKeys(s.getLastName());
@@ -132,37 +99,19 @@ public class CheckoutPage extends AbstractPage {
         getInputByTitle("City").sendKeys(s.getCity());
         getInputByTitle("Zip/Postal Code").sendKeys(s.getZip());
         getInputByTitle("Telephone").sendKeys(s.getTelephone());
-        //        clickOnWebElem(shippingConuntryDropdown);
-        //        Select shippingCountrySelect = new Select(shippingConuntryDropdown);
-        //        shippingCountrySelect.selectByVisibleText(s.getCountry());
         shippingConuntryDropdown.selectByVisibleText(s.getCountry());
-        //        clickOnWebElem(shippingStateDropdown);
-        //        Select shippingStateSelect = new Select(shippingStateDropdown);
-        //        shippingStateSelect.selectByVisibleText(s.getState());
         shippingStateDropdown.selectByVisibleText(s.getState());
-        //set the shiping inf in the shipininf obj.
-        /*
-         * ShippingInform shippingInform=new ShippingInform(); shippingInform.setFirstName(s.getFirstName()); shippingInform.setLastName(s.getLastName());
-         * shippingInform.setStreetAddr(s.getStreetAddr()); shippingInform.setCity(s.getCity()); shippingInform.setZip(s.getZip());
-         * shippingInform.setTelephone(s.getTelephone()); shippingInform.setCountry(s.getCountry()); shippingInform.setState(s.getState());
-         */
-        // shippingTabContinueButton.click();
+        scrollToElementWithText(Constants.TEXT_BUTTON_CONTINUE);
         clickOnWebElemWithText(Constants.TEXT_BUTTON_CONTINUE);
-        //withTimeoutOf(Duration.ofSeconds(15)).waitFor(flatRateLabel);
         waitForWebElemToAppear(flatRateLabel);
 
     }
 
     public void selectShippingMet() {
-        //        clickOnWebElem(shippingMethodRadioButton);
         clickOnWebElemWithText(Constants.SHIPING_METHOD_FREE);
-        //        clickOnWebElem(shippingMethodContinueButton);
         clickOnWebElemWithText(Constants.TEXT_BUTTON_CONTINUE);
-        //withTimeoutOf(Duration.ofSeconds(10)).waitFor(paymentContinueButton);
         waitForWebElemToAppear(paymentContinueButton);
-        //        paymentContinueButton.click();
         clickOnWebElemWithText(Constants.TEXT_BUTTON_CONTINUE);
-        //withTimeoutOf(Duration.ofSeconds(20)).waitFor(placeOrderBtn);
         waitForWebElemToAppear(placeOrderBtn);
 
     }
@@ -288,7 +237,6 @@ public class CheckoutPage extends AbstractPage {
     }
 
     public void clickPlaceOrder() {
-        //        clickOnWebElem(placeOrderButton);
         clickOnWebElemWithText(Constants.TEXT_BUTTON_PLACE_ORDER);
         withTimeoutOf(Duration.ofSeconds(10));
     }

@@ -40,16 +40,7 @@ public class CheckoutTest extends BaseTest {
 
         checkoutSteps.clickProceedToCheckoutBtn();
         checkoutSteps.selectCheckoutMethodAndContinue(Constants.CHECKOUT_METHOD_AS_GUEST);
-
-        //TO DO nu e nevoie musai de pas separat, l-am inclus in selectCheckoutMethodAndContinue
-        //checkoutSteps.selectContinue();
-        //TO DO instance in step chemam doar, ca salvam pe sesiune si ne luam de acolo in pasii de verificare
-        //BillingInf billingInf = getBillingInfInstance();
-        //checkoutSteps.fillRequestedFieldsForBilling(billingInf);
         checkoutSteps.fillRequestedFieldsForBilling();
-        //TO DO la fel ca la billing
-        //ShippingInform shippingInform = getShippingInformInstance();
-        //checkoutSteps.fillRequestedFieldsForShipping(shippingInform);
         checkoutSteps.fillRequestedFieldsForShipping();
         checkoutSteps.selectShippingMet();
         checkoutSteps.verifyBillingDetails();

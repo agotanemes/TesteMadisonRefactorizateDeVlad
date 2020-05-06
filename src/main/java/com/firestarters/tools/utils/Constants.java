@@ -12,5 +12,5 @@ public class Constants {
     public static final String TEXT_BUTTON_PLACE_ORDER = "Place Order";
     public static final String CHECKOUT_METHOD_AS_GUEST = "Checkout as Guest";
     public static final String SHIP_TO_DIFFERENT_ADDRESS = "Ship to different address";
-    public static final String SHIPING_METHOD_FREE = "Free                                                                        ";
+    public static final String SHIPING_METHOD_FREE = "Fixed                                                                        ";
 }
