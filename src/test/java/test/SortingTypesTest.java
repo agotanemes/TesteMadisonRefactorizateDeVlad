@@ -1,15 +1,11 @@
 package test;
 
-import com.firestarters.page.SortingTypesPage;
-import com.firestarters.steps.HomepageSteps;
-import com.firestarters.steps.SortingTypesSteps;
+import com.firestarters.steps.ui.HomepageSteps;
+import com.firestarters.steps.ui.SortingTypesSteps;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 @RunWith(SerenityRunner.class)
 public class SortingTypesTest extends BaseTest{

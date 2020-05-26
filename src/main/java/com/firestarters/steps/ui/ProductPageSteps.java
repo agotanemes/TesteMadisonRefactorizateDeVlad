@@ -1,4 +1,4 @@
-package com.firestarters.steps;
+package com.firestarters.steps.ui;
 
 import com.firestarters.page.ProductListPage;
 import net.thucydides.core.annotations.Step;

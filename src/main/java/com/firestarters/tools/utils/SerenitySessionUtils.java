@@ -62,4 +62,11 @@ public class SerenitySessionUtils {
 
     }
 
+    public static void saveObjectInTheListInSerenitySession(String key, Object obj) {
+        if (!Serenity.getCurrentSession().containsKey(key)) {
+            Serenity.getCurrentSession().put(key, new ArrayList<>());
+        }
+        ((List<Object>)Serenity.getCurrentSession().get(key)).add(obj);
+    }
+
 }

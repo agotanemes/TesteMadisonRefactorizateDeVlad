@@ -1,4 +1,4 @@
-package com.firestarters.steps;
+package com.firestarters.steps.ui;
 
 import com.firestarters.factory.BillingInfFactory;
 import com.firestarters.factory.ShippingInformFactory;
@@ -7,8 +7,8 @@ import com.firestarters.models.Cart;
 import com.firestarters.models.CartProduct;
 import com.firestarters.models.ShippingInform;
 import com.firestarters.page.CheckoutPage;
-import com.firestarters.tools.utils.Constants;
-import com.firestarters.tools.utils.SerenityKeyConstants;
+import com.firestarters.tools.constants.Constants;
+import com.firestarters.tools.constants.SerenityKeyConstants;
 import com.firestarters.tools.utils.SerenitySessionUtils;
 
 import net.thucydides.core.annotations.Step;

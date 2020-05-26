@@ -1,14 +1,13 @@
 package test;
 
-import com.firestarters.models.Cart;
-import com.firestarters.steps.*;
+import com.firestarters.steps.ui.*;
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import java.lang.reflect.InvocationTargetException;
-import java.sql.SQLOutput;
+
+import static com.firestarters.tools.constants.Constants.CART_TAX_RATE;
 
 @RunWith(SerenityRunner.class)
 public class Test001VerifyCart extends BaseTest {
@@ -28,9 +27,10 @@ public class Test001VerifyCart extends BaseTest {
 
         String firstProductName = "ELIZABETH KNIT TOP";
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
-        productPageSteps.openProduct(firstProductName);
+        productPageSteps.openProduct("ELIZABETH KNIT TOP");
         productDetailsSteps.addDetailedProductToCart(2);
-        cartPageSteps. verifyCartDetails();
+        cartPageSteps.verifyCartDetails(CART_TAX_RATE);
+
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
@@ -38,7 +38,7 @@ public class Test001VerifyCart extends BaseTest {
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(secondProductName);
         productDetailsSteps.addDetailedProductToCart(2);
-        cartPageSteps.verifyCartDetails();
+        cartPageSteps.verifyCartDetails(CART_TAX_RATE);
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
@@ -46,17 +46,17 @@ public class Test001VerifyCart extends BaseTest {
            homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(thirdProductName);
         productDetailsSteps.addDetailedProductToCart(1);
-        cartPageSteps.verifyCartDetails();
+        cartPageSteps.verifyCartDetails(CART_TAX_RATE);
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
         cartPageSteps.modifyProductQuantityFromCart(secondProductName, 4);
-        cartPageSteps.verifyCartDetails();
+        cartPageSteps.verifyCartDetails(CART_TAX_RATE);
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
         cartPageSteps.removeProductFromCart(firstProductName);
-        cartPageSteps.verifyCartDetails();
+        cartPageSteps.verifyCartDetails(CART_TAX_RATE);
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
@@ -71,14 +71,14 @@ public class Test001VerifyCart extends BaseTest {
         webdriver.navigate().refresh();
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
-        cartPageSteps.verifyCartDetails();
+        cartPageSteps.verifyCartDetails(CART_TAX_RATE);
 
 
         cartPageSteps.removeMiniCartProduct("TORI TANK");
         webdriver.navigate().refresh();
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
-        cartPageSteps.verifyCartDetails();
+        cartPageSteps.verifyCartDetails(CART_TAX_RATE);
 
 
     }

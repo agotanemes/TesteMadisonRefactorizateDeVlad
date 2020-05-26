@@ -6,10 +6,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import com.firestarters.tools.utils.Utils;
 
 import static com.firestarters.tools.utils.Utils.convertStringToDouble;
 import static com.firestarters.tools.utils.Utils.stringReplace;

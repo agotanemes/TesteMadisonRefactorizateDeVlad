@@ -1,9 +1,9 @@
-package com.firestarters.steps;
+package com.firestarters.steps.ui;
 
 import com.firestarters.models.Cart;
 import com.firestarters.models.CartProduct;
 import com.firestarters.page.CartPage;
-import com.firestarters.tools.utils.SerenityKeyConstants;
+import com.firestarters.tools.constants.SerenityKeyConstants;
 import com.firestarters.tools.utils.SerenitySessionUtils;
 import net.thucydides.core.annotations.Step;
 import org.junit.Assert;
@@ -166,17 +166,19 @@ public class CartPageSteps {
     }
 
     @Step
-    public void verifyCartDetails() {
-        Cart expectedCart = new Cart(SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST));
+    public void verifyCartDetails(double taxRate) {
+        Cart expectedCart = new Cart((List<CartProduct>) SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST), taxRate);
         Cart actualCart = new Cart();
         actualCart.setCartProducts(cartPage.getProducts());
-        actualCart.setGrandTotal(cartPage.totalPriceAsDouble());
+        actualCart.setGrandTotal(cartPage.getTotalPriceAsDouble());
         actualCart.setTax(cartPage.getTax());
-        actualCart.setSubtotal(getSubtotal());
+        actualCart.setSubtotal(cartPage.getSubtotal());
         System.out.println("Expected cart is: " + expectedCart.toString());
         System.out.println("Actual cart is: " + actualCart.toString());
-        Assert.assertTrue("Cart details are not as expected!", expectedCart.equals(actualCart));
+
+         Assert.assertTrue("Cart details are not as expected!", expectedCart.equals(actualCart));
     }
+
     //minicart
     @Step
     public WebElement getMiniCart(){

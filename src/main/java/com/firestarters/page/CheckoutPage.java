@@ -12,7 +12,7 @@ import com.firestarters.models.BillingInf;
 import com.firestarters.models.Cart;
 import com.firestarters.models.CartProduct;
 import com.firestarters.models.ShippingInform;
-import com.firestarters.tools.utils.Constants;
+import com.firestarters.tools.constants.Constants;
 
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;

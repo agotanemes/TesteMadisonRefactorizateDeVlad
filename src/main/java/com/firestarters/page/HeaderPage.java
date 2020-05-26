@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @DefaultUrl("http://qa2.dev.evozon.com/customer/account/")
-public class HeaderPage extends AbstractPage {
+public class HeaderPage extends GeneralPage {
 
 
     public String getTitle() {

@@ -1,9 +1,10 @@
 package test;
 
-import com.firestarters.steps.CartPageSteps;
-import com.firestarters.tools.utils.Constants;
+import com.firestarters.steps.ui.CartPageSteps;
+import com.firestarters.tools.constants.Constants;
 import net.thucydides.core.annotations.Managed;
 import net.thucydides.core.annotations.Steps;
+import net.thucydides.core.steps.StepEventBus;
 import org.junit.After;
 import org.junit.Before;
 import org.openqa.selenium.WebDriver;
@@ -19,16 +20,29 @@ public class BaseTest {
 
     @Before
     public void setup() {
-        System.out.println("Before test!");
-        webdriver.get(Constants.URL);
-        webdriver.manage().window().maximize();
-        webdriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+       System.out.println("Before test!");
+       webdriver.get(Constants.URL);
+       webdriver.manage().window().maximize();
+       webdriver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+        System.setProperty("http.proxyHost", "localhost");
+        System.setProperty("http.proxyPort", "8080");
+        System.setProperty("https.proxyHost", "localhost");
+        System.setProperty("https.proxyPort", "8080");
     }
+   /* @Before
+    public void listen() {
+        System.setProperty("http.proxyHost", "localhost");
+        System.setProperty("http.proxyPort", "8080");
+        System.setProperty("https.proxyHost", "localhost");
+        System.setProperty("https.proxyPort", "8080");
+    }*/
 
     @After
     public void tearDown() {
-        System.out.println("After test!");
-        webdriver.quit();
+        StepEventBus.getEventBus().clearStepFailures();
+        //        cartHttpSteps.emptyCart();
+        //System.out.println("After test!");
+        //webdriver.quit();
     }
 
 }

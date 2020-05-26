@@ -14,63 +14,23 @@ public class ProductDetailsPage extends AbstractPage {
 
     @FindBy(css = "ul#configurable_swatch_color li:not(.not-available) a")
     private List<WebElementFacade> colorList;
-
     @FindBy(css = "ul#configurable_swatch_size li:not(.not-available) a")
     private List<WebElementFacade> sizeList;
-
     @FindBy(css = "div>.btn-cart")
     private WebElementFacade addToCartButton;
-    //Agota 10.03.2020
     @FindBy(css = "#qty")
     private WebElementFacade qtyInput;
-    //11.03.2020
     @FindBy(css = ".product-shop .product-name span")
     private WebElementFacade productName;
     @FindBy(css = ".price-info  span[id*='product-price']>span")
     private WebElementFacade productPrice;
 
-    //
-
-    //Ciuverca Ionut
-    public void selectAColor() {
-        Random color = new Random();
-        WebElement randomColor = colorList.get(color.nextInt(colorList.size()));
-        randomColor.click();
-    }
-
-    //Ciuverca Ionut
-    public void selectSize() {
-        Random size = new Random();
-        WebElement randomSize = sizeList.get(size.nextInt(sizeList.size()));
-        randomSize.click();
-    }
-
-    //Ciuverca Ionut
     public void clickAddToCartButton() {
         addToCartButton.click();
     }
 
-    //Agota 10.03.2020
-
-    public List<WebElementFacade> getColorList() {
-        return colorList;
-    }
-
-    public List<WebElementFacade> getSizeList() {
-        return sizeList;
-    }
-
-    public WebElementFacade getQtyInput() {
-        return qtyInput;
-    }
-
-    //
     public void clickOnWebElem(WebElement elem) {
         elem.click();
-    }
-
-    public String getSpecifiedWebAtr(WebElement elem, String atr) {
-        return elem.getAttribute(atr);
     }
 
     public void selectColor(String color) {
@@ -120,12 +80,6 @@ public class ProductDetailsPage extends AbstractPage {
     public double getProductPrice() {
         String price = productPrice.getText();
         Double correctPrice = convertStringToDouble(stringReplace(price));
-        double returnedPrice = correctPrice.doubleValue();
-        return returnedPrice;
-    }
-
-    public double getStringAsdouble(String s) {
-        Double correctPrice = convertStringToDouble(stringReplace(s));
         double returnedPrice = correctPrice.doubleValue();
         return returnedPrice;
     }

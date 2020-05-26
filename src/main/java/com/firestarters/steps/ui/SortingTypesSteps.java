@@ -1,4 +1,4 @@
-package com.firestarters.steps;
+package com.firestarters.steps.ui;
 
 import com.firestarters.page.SortingTypesPage;
 import net.thucydides.core.annotations.Step;

@@ -1,11 +1,11 @@
 package test;
 
-import com.firestarters.steps.CartPageSteps;
-import com.firestarters.steps.CheckoutSteps;
-import com.firestarters.steps.HomepageSteps;
-import com.firestarters.steps.ProductDetailsSteps;
-import com.firestarters.steps.ProductPageSteps;
-import com.firestarters.tools.utils.Constants;
+import com.firestarters.steps.ui.CartPageSteps;
+import com.firestarters.steps.ui.CheckoutSteps;
+import com.firestarters.steps.ui.HomepageSteps;
+import com.firestarters.steps.ui.ProductDetailsSteps;
+import com.firestarters.steps.ui.ProductPageSteps;
+import com.firestarters.tools.constants.Constants;
 
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;

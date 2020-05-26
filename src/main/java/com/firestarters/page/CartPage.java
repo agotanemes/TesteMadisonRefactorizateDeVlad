@@ -2,14 +2,12 @@ package com.firestarters.page;
 
 import com.firestarters.models.Cart;
 import com.firestarters.models.CartProduct;
-import com.firestarters.tools.utils.SerenityKeyConstants;
-import com.firestarters.tools.utils.SerenitySessionUtils;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebElement;
 
 import java.time.Duration;
@@ -23,18 +21,14 @@ public class CartPage extends AbstractPage {
 
     @FindBy(css = "#shopping-cart-table > tbody tr")
     private List<WebElementFacade> cartProductsList;
-
-    //@FindBy(css = ".button[title*='Proceed']")
     @FindBy(css = ".checkout-types.top .btn-proceed-checkout")
     private WebElementFacade proceedToCheckoutButton;
-
     @FindBy(css = "#shopping-cart-table > tbody")
     private WebElementFacade listOfProductsInCart;
     @FindBy(css = ".product-cart-actions .link-wishlist")
     private WebElementFacade wishlistBtnInCart;
     @FindBy(css = ".success-msg")
     private WebElementFacade successMsgAddedInWishlist;
-
     @FindBy(css = "#shopping-cart-table")
     private WebElementFacade productTable;
 
@@ -43,12 +37,9 @@ public class CartPage extends AbstractPage {
     private List<WebElementFacade> productList;
     @FindBy(css = ".a-right>strong>span[class='price']")
     private WebElement totalPrice;
-    //@FindBy(css=".a-right span[class='price']")
-    //private List<WebElement> totalPriceList;
     @FindBy(css = ".count")
     private WebElement nrOfProductsFromCart;
 
-    //@FindBy(css="skip-link ")
     @FindBy(css = ".skip-account>span:nth-child(2)")
     private WebElement account;
     @FindBy(css = ".top-link-cart ")
@@ -59,16 +50,11 @@ public class CartPage extends AbstractPage {
     @FindBy(css = "#cart-sidebar>li .product-details")
     private List<WebElement> miniCartRecentlyAddedProd;
 
-
-
-    //-------------------
-    //Ciuverca Ionut
     public int getNumberOfElementsFromCartProductsList() {
 
         return cartProductsList.size();
     }
 
-    //Ciuverca Ionut
     public void proceedToCheckout() {
         proceedToCheckoutButton.click();
     }
@@ -77,14 +63,10 @@ public class CartPage extends AbstractPage {
         return cartProductsList;
     }
 
-    //Agota
-
-
-    public WebElement getTotalPrice() {
+   public WebElement getTotalPrice() {
         return totalPrice;
-    }
+   }
 
-    //return Product list from cart
     public List<WebElementFacade> getProductList() {
         return productList;
     }
@@ -101,45 +83,22 @@ public class CartPage extends AbstractPage {
     public WebElementFacade getSuccessMsgAddedInWishlist() {
         return successMsgAddedInWishlist;
     }
-
-    //12.03.2020
-
-
-
-    //13.03.2020
     public List<CartProduct> getProducts() {
         List<CartProduct> products = new ArrayList<>();
-        List<WebElementFacade> productListFromWeb = getProductList();
-        for (WebElementFacade product : productListFromWeb) {
-            CartProduct pr = new CartProduct();
-            String price = product.findElement(By.cssSelector(" td[class='product-cart-price']")).getText();
-            //qty
-            String qty = product.findElement(By.cssSelector("td[class='product-cart-actions']>input")).getAttribute("value");
-            Double correctPrice = convertStringToDouble(stringReplace(price));
-            //price
-            double priceAsdouble = correctPrice.doubleValue();
-            //name
-            String productName = product.findElement(By.cssSelector(" .product-name>a")).getText();
-            //color
-            String productColor = product.findElement(By.cssSelector("td.product-cart-info dd:nth-child(2)")).getText();
-            //size
-            String productSize = product.findElement(By.cssSelector(" dd:nth-child(4)")).getText();
-            ;
-            //subtotal
-            String subtotal = product.findElement(By.cssSelector("td[class='product-cart-total'] span[class='price']")).getText();
-            Double correctSubtotal = convertStringToDouble(stringReplace(subtotal));
-            double subtotalAsdouble = correctSubtotal.doubleValue();
-            pr.setColor(productColor);
-            pr.setSize(productSize);
-            pr.setQty(Integer.parseInt(qty));
-            pr.setName(productName);
-            pr.setPrice(priceAsdouble);
-            pr.setSubtotal();
-            products.add(pr);
+        for (WebElementFacade product : productList) {
+            CartProduct cartProduct = new CartProduct();
+            cartProduct
+                    .setPrice(Double.parseDouble(product.findElement(By.cssSelector("td[class='product-cart-price']")).getText().replaceAll("[^0-9.]+", "")));
+            cartProduct.setQty(Integer.parseInt(product.findElement(By.cssSelector("td[class='product-cart-actions']>input")).getAttribute("value")));
+            cartProduct.setName(product.findElement(By.cssSelector(" .product-name>a")).getText());
+            cartProduct.setColor(product.findElement(By.cssSelector("td.product-cart-info dd:nth-child(2)")).getText());
+            cartProduct.setSize(product.findElement(By.cssSelector(" dd:nth-child(4)")).getText());
+            cartProduct.setSubtotal(Double.parseDouble(product.findElement(By.cssSelector("td[class='product-cart-total'] span[class='price']")).getText()
+                    .replaceAll("[^0-9.]+", "")));
+            products.add(cartProduct);
         }
         return products;
     }
-
     public double getTheSumOfSubtotals(List<CartProduct> producs) {
         double sum = 0;
         for (CartProduct p : producs) {
@@ -153,18 +112,18 @@ public class CartPage extends AbstractPage {
     }
 
     public double getTax() {
-        WebElement tax = getDriver().findElement(By.xpath("//tr/td[contains(text(),'Tax')]/following-sibling::td/span"));
-        String taxAsString = tax.getText();
-        double taxAsDouble = convertStringToDouble(stringReplace(taxAsString));
-        //System.out.println("taxa ca double: "+ taxAsDouble);
-        return taxAsDouble;
+        try {
+            return Double.parseDouble(getDriver().findElement(By.xpath("//tr/td[contains(text(),'Tax')]/following-sibling::td/span")).getText()
+                    .replaceAll("[^0-9.]+", ""));
+        } catch (NoSuchElementException e) {
+            return 0;
+        }
     }
 
+
     public double getSubtotal() {
-        WebElement subtotal = getDriver().findElement(By.xpath("//tr/td[contains(text(),'Subtotal')]/following-sibling::td/span"));
-        double subtotalAsDouble = convertStringToDouble(stringReplace(subtotal.getText()));
-        //System.out.println("subtotalul ca double: "+ subtotalAsDouble);
-        return subtotalAsDouble;
+        return Double.parseDouble(getDriver().findElement(By.xpath("//tr/td[contains(text(),'Subtotal')]/following-sibling::td/span")).getText()
+                .replaceAll("[^0-9.]+", ""));
     }
 
 
@@ -176,8 +135,6 @@ public class CartPage extends AbstractPage {
     public WebElementFacade getProceedToCheckoutButton() {
         return proceedToCheckoutButton;
     }
-
-    //for order review from checkout
 
     public Cart getTotalPricesForOrderReview(List<CartProduct> products) {
         Cart cart = new Cart();
@@ -333,5 +290,9 @@ public class CartPage extends AbstractPage {
         }
         waitABit(5000);
     }
+    public double getTotalPriceAsDouble() {
+        return Double.parseDouble(totalPrice.getText().replaceAll("[^0-9.]+", ""));
+    }
+
 
 }

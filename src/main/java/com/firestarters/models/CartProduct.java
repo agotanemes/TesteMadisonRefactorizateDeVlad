@@ -1,6 +1,6 @@
 package com.firestarters.models;
 
-import com.firestarters.tools.utils.Constants;
+import com.firestarters.tools.constants.Constants;
 
 import java.util.Objects;
 
@@ -28,6 +28,10 @@ public class CartProduct {
     public void setSubtotal() {
         this.subtotal = this.price * this.qty;
     }
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
+    }
+
     public void setSub(double subtotal){
         this.subtotal=subtotal;
     }

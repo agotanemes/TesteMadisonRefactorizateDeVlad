@@ -1,12 +1,12 @@
 package com.firestarters.models;
 
-import com.firestarters.tools.utils.Constants;
+import com.firestarters.tools.constants.Constants;
 import org.decimal4j.util.DoubleRounder;
 
 import java.util.List;
 
 public class Cart {
-    private double subtotal, tax, grandTotal;
+    private double subtotal, tax, grandTotal,taxRate;
     List<CartProduct> cartProducts;
 
     public Cart() {
@@ -18,6 +18,14 @@ public class Cart {
         this.tax = getTax();
         this.grandTotal = getGrandTotal();
     }
+    public Cart(List<CartProduct> cartProducts, double taxRate) {
+        this.cartProducts = cartProducts;
+        this.taxRate = taxRate;
+        this.subtotal = getSubtotal();
+        this.tax = getTax();
+        this.grandTotal = getGrandTotal();
+    }
+
 
     public List<CartProduct> getCartProducts() {
         return cartProducts;
@@ -28,21 +36,13 @@ public class Cart {
     }
 
     public double getSubtotal() {
-       this.subtotal = 0;
+        this.subtotal = 0;
         for (CartProduct cartProduct : cartProducts) {
             this.subtotal = this.subtotal + cartProduct.getSubtotal();
         }
-        System.out.println("Subtotal !!!!"+subtotal);
+        System.out.println("Subtotal !!!!" + subtotal);
         return this.subtotal;
-      /* double subtotal=0;
-       for (CartProduct cartProduct:cartProducts){
-           subtotal=subtotal+cartProduct.getSubtotal();
-       }
-       return subtotal;*/
     }
-    /*public double getSubtotal(){
-        return this.subtotal;
-    }*/
 
     @Override
     public int hashCode() {
@@ -58,6 +58,7 @@ public class Cart {
         result = prime * result + (int)(temp ^ (temp >>> 32));
         return result;
     }
+
 
     @Override
     public boolean equals(Object obj) {
@@ -82,7 +83,6 @@ public class Cart {
         return true;
     }
 
-
     @Override
     public String toString() {
         return "Cart [subtotal=" + subtotal + ", tax=" + tax + ", grandTotal=" + grandTotal + ", cartProducts=" + cartProducts + "]";
@@ -92,12 +92,9 @@ public class Cart {
         this.subtotal = subtotal;
     }
 
-    public double getTax() {
-        double tax=Constants.CART_TAX_RATE*this.subtotal;
-        double drounder= DoubleRounder.round(tax,2);
-        return drounder;
-        //return this.subtotal * Constants.CART_TAX_RATE;
-    }
+  public double getTax() {
+      return DoubleRounder.round(this.taxRate * this.subtotal,2);
+  }
 
     public void setTax(double tax) {
         this.tax = tax;
@@ -110,9 +107,5 @@ public class Cart {
     public void setGrandTotal(double grandTotal) {
         this.grandTotal = grandTotal;
     }
-    public void setCalcTax() {
-        double tax=0.0825*this.subtotal;
-        double drounder= DoubleRounder.round(tax,2);
-        this.tax=drounder;
-    }
+
 }
