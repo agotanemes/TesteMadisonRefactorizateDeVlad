@@ -13,4 +13,9 @@ public class HeaderSteps extends ScenarioSteps {
         headerPage.clickOnWebElemWithText("Cart");
         headerPage.clickOnWebElemWithText("View Shopping Cart");
     }
+    @Step
+    public void openWishList(){
+        headerPage.clickOnWebElemWithText("Account");
+        headerPage.clickOnWebElemWithText("My Wishlist");
+    }
 }

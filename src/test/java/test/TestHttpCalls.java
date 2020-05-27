@@ -33,7 +33,7 @@ public class TestHttpCalls extends BaseTest {
     private HeaderSteps headerSteps;
 
     @Before
-    public void setup() {
+    public void cartSetup() {
         loginHttpSteps.login();
         cartHttpSteps.emptyCart();
         homeHttpSteps.getProductsFromASubcategory("New Arrivals", "Women");

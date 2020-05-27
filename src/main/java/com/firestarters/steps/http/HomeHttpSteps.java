@@ -1,5 +1,7 @@
 package com.firestarters.steps.http;
 
+import com.firestarters.tools.constants.Constants;
+import com.firestarters.tools.utils.JsoupUtils;
 import com.jayway.restassured.response.Response;
 import net.thucydides.core.annotations.Step;
 import com.firestarters.tools.constants.SerenityKeyConstants;
@@ -15,5 +17,11 @@ public class HomeHttpSteps extends AbstractHttpSteps {
         //html-ul respectiv il salvezi pe sesoune ca string
         //la cheia "products html" ii asociezi toata pagina de produse ca si String
         SerenitySessionUtils.putOnSession(SerenityKeyConstants.HTML_RESPONSE_PRODUCTS, productsPage.asString());
+    }
+    @Step
+    public void addProductToWishList(String name){
+        String productsPage = SerenitySessionUtils.getFromSession(SerenityKeyConstants.HTML_RESPONSE_PRODUCTS);
+        String addProductToWishlistPath = JsoupUtils.extractElementAttributeFromHtml(productsPage, "a[title='a[title='Elizabeth Knit Top']+.product-info .actions .link-wishlist", "href").replace(Constants.BASE_URI, "");
+        getRequest(addProductToWishlistPath);
     }
 }
