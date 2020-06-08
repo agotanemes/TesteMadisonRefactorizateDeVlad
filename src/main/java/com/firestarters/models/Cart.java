@@ -12,6 +12,7 @@ public class Cart {
     public Cart() {
     }
 
+
     public Cart(List<CartProduct> cartProducts) {
         this.cartProducts = cartProducts;
         this.subtotal = getSubtotal();
