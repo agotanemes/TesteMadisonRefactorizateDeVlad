@@ -4,7 +4,7 @@ import com.firestarters.factory.BillingInfFactory;
 import com.firestarters.factory.ShippingInformFactory;
 import com.firestarters.models.BillingInf;
 import com.firestarters.models.Cart;
-import com.firestarters.models.CartProduct;
+import com.firestarters.models.Product;
 import com.firestarters.models.ShippingInform;
 import com.firestarters.page.CheckoutPage;
 import com.firestarters.tools.constants.Constants;
@@ -63,8 +63,8 @@ public class CheckoutSteps {
     public void verifyOrderReviewCartProdDetails() {
         Cart expectedCart = new Cart(SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST));
         Cart actualCart = checkoutPage.getOrderReviewCart();
-        List<CartProduct> expectedCartProdList = expectedCart.getCartProducts();
-        List<CartProduct> actualCartProdList = actualCart.getCartProducts();
+        List<Product> expectedCartProdList = expectedCart.getCartProducts();
+        List<Product> actualCartProdList = actualCart.getCartProducts();
         for (int i = 0; i < expectedCartProdList.size(); i++) {
             Assert.assertTrue(expectedCartProdList.get(i).getColor().equals(actualCartProdList.get(i).getColor()));
             Assert.assertTrue(expectedCartProdList.get(i).getSize().equals(actualCartProdList.get(i).getSize()));

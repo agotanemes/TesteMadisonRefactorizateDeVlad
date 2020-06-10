@@ -1,6 +1,6 @@
 package com.firestarters.steps.http;
 
-import com.firestarters.models.CartProduct;
+import com.firestarters.models.Product;
 import com.firestarters.tools.constants.Constants;
 import com.firestarters.tools.utils.JsoupUtils;
 import com.jayway.restassured.response.Response;
@@ -23,10 +23,15 @@ public class HomeHttpSteps extends AbstractHttpSteps {
     public void addProductToWishList(String name){
         //luam toata pagina ce contine lista de produse
         String productsPage = SerenitySessionUtils.getFromSession(SerenityKeyConstants.HTML_RESPONSE_PRODUCTS);
-        String addProductToWishlistPath = JsoupUtils.extractElementAttributeFromHtml(productsPage, "a[title='a[title='"+name+"']"+".product-info .actions .link-wishlist", "href").replace(Constants.BASE_URI, "");
+        String addProductToWishlistPath = JsoupUtils.extractElementAttributeFromHtml(productsPage, "a[title='" + name + "']+div .link-wishlist", "href")
+                .replace(Constants.BASE_URI, "");
+        System.out.println("path "+ addProductToWishlistPath);
         getRequest(addProductToWishlistPath);
-        CartProduct wishListProd= new CartProduct();
+        Product wishListProd= new Product();
         wishListProd.setName(name);
+        wishListProd.setQty(1);
+        wishListProd.setPrice(Double.parseDouble(JsoupUtils.extractElementTextFromHtml(productsPage, "a[title='" + name + "']+.product-info .price").replaceAll(
+                "[^0-9.]+", "")));
         SerenitySessionUtils.saveObjectInTheListInSerenitySession(SerenityKeyConstants.WISHLIST_PRODUCTS_LIST, wishListProd);
     }
 }

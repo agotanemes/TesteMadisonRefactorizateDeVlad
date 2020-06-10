@@ -10,7 +10,7 @@ import static com.firestarters.tools.utils.Utils.stringReplace;
 
 import com.firestarters.models.BillingInf;
 import com.firestarters.models.Cart;
-import com.firestarters.models.CartProduct;
+import com.firestarters.models.Product;
 import com.firestarters.models.ShippingInform;
 import com.firestarters.tools.constants.Constants;
 
@@ -117,11 +117,11 @@ public class CheckoutPage extends GeneralPage {
     }
 
     public Cart getOrderReviewCart() {
-        List<CartProduct> cartProducts = new ArrayList<>();
+        List<Product> products = new ArrayList<>();
         waitForWebElemToAppear(orderReviewHeader);
         List<WebElement> orderReviewprod = orderReviewProducts;
         for (WebElement prod : orderReviewprod) {
-            CartProduct cartProduct = new CartProduct();
+            Product product = new Product();
             String name = prod.findElement(By.cssSelector(".product-name")).getText();
             String color = prod.findElement(By.cssSelector("dd:nth-child(2)")).getText();
             String size = prod.findElement(By.cssSelector("dd:nth-child(4)")).getText();
@@ -132,14 +132,14 @@ public class CheckoutPage extends GeneralPage {
             String subtotal = prod.findElement(By.cssSelector("td[data-rwd-label='Subtotal']")).getText();
             Double correctSub = convertStringToDouble(stringReplace(subtotal));
             double subtotalAsDouble = correctSub.doubleValue();
-            cartProduct.setName(name);
-            cartProduct.setColor(color);
-            cartProduct.setSize(size);
-            cartProduct.setPrice(priceAsdouble);
+            product.setName(name);
+            product.setColor(color);
+            product.setSize(size);
+            product.setPrice(priceAsdouble);
             int qtyInt = Integer.parseInt(qty);
-            cartProduct.setQty(qtyInt);
-            cartProduct.setSub(subtotalAsDouble);
-            cartProducts.add(cartProduct);
+            product.setQty(qtyInt);
+            product.setSubtotal(subtotalAsDouble);
+            products.add(product);
         }
         String subtotal = totalPrices.get(0).getText();
         String tax = totalPrices.get(1).getText();
@@ -148,7 +148,7 @@ public class CheckoutPage extends GeneralPage {
         double dTax = convertStringToDouble(stringReplace(tax));
         double dGrandTotal = convertStringToDouble(stringReplace(grandTotal));
         Cart cart = new Cart();
-        cart.setCartProducts(cartProducts);
+        cart.setCartProducts(products);
         cart.setGrandTotal(dGrandTotal);
         cart.setTax(dTax);
         cart.setSubtotal(dSubtotal);

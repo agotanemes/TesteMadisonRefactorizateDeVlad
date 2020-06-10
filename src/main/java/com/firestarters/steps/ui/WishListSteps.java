@@ -1,7 +1,8 @@
 package com.firestarters.steps.ui;
 
 import com.firestarters.models.Cart;
-import com.firestarters.models.CartProduct;
+import com.firestarters.models.Product;
+import com.firestarters.models.Wishlist;
 import com.firestarters.page.WishListPage;
 import com.firestarters.tools.constants.SerenityKeyConstants;
 import com.firestarters.tools.utils.SerenitySessionUtils;
@@ -17,12 +18,12 @@ public class WishListSteps extends ScenarioSteps {
 
     @Step
     public void verifyWishListDetails(){
-        Cart expectedWishList = new Cart((List<CartProduct>) SerenitySessionUtils.getFromSession(SerenityKeyConstants.WISHLIST_PRODUCTS_LIST));
-        Cart actualWishList= new Cart();
-        actualWishList.setCartProducts(wishListPage.getProductsFromWishList());
-        for(int i=0;i<expectedWishList.getCartProducts().size();i++){
-            Assert.assertTrue(actualWishList.getCartProducts().get(i).getName().equals(expectedWishList.getCartProducts().get(i).getName()));
-
+        Wishlist expectedWishList = new Wishlist((List<Product>) SerenitySessionUtils.getFromSession(SerenityKeyConstants.WISHLIST_PRODUCTS_LIST));
+        Wishlist actualWishList= new Wishlist();
+        actualWishList.setWishlistProducts(wishListPage.getProductsFromWishList());
+        System.out.println("Expected wishlist is: " + expectedWishList.toString());
+        System.out.println("Actual wishlist is: " + actualWishList.toString());
+        Assert.assertTrue("Cart details are not as expected!", expectedWishList.equals(actualWishList));
         }
     }
-}
+

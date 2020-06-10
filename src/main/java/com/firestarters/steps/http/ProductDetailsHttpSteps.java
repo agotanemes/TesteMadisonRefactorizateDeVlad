@@ -1,6 +1,6 @@
 package com.firestarters.steps.http;
 
-import com.firestarters.models.CartProduct;
+import com.firestarters.models.Product;
 import net.thucydides.core.annotations.Step;
 import com.firestarters.tools.constants.Constants;
 import com.firestarters.tools.constants.SerenityKeyConstants;
@@ -13,11 +13,11 @@ import java.util.Map;
 public class ProductDetailsHttpSteps extends AbstractHttpSteps {
     private static final long serialVersionUID = 1L;
 
-    public CartProduct getDetailedProductInstanceFromPage(String html) {
-        CartProduct cartProduct = new CartProduct();
-        cartProduct.setName(JsoupUtils.extractElementTextFromHtml(html, ".product-name h1").toUpperCase());
-        cartProduct.setPrice(Double.parseDouble(JsoupUtils.extractElementTextFromHtml(html, ".price-box .price").replaceAll("[^0-9.]+", "")));
-        return cartProduct;
+    public Product getDetailedProductInstanceFromPage(String html) {
+        Product product = new Product();
+        product.setName(JsoupUtils.extractElementTextFromHtml(html, ".product-name h1").toUpperCase());
+        product.setPrice(Double.parseDouble(JsoupUtils.extractElementTextFromHtml(html, ".price-box .price").replaceAll("[^0-9.]+", "")));
+        return product;
     }
 
     @Step
@@ -37,11 +37,11 @@ public class ProductDetailsHttpSteps extends AbstractHttpSteps {
 
         postRequest(addProductToCartPath, params);
 
-        CartProduct cartProduct = getDetailedProductInstanceFromPage(detailedProductHtml);
-        cartProduct.setQty(quantity);
-        cartProduct.setColor(color);
-        cartProduct.setSize(size);
-        cartProduct.setSubtotal(cartProduct.getQty() * cartProduct.getPrice());
-        SerenitySessionUtils.saveObjectInTheListInSerenitySession(SerenityKeyConstants.CART_PRODUCTS_LIST, cartProduct);
+        Product product = getDetailedProductInstanceFromPage(detailedProductHtml);
+        product.setQty(quantity);
+        product.setColor(color);
+        product.setSize(size);
+        product.setSubtotal(product.getQty() * product.getPrice());
+        SerenitySessionUtils.saveObjectInTheListInSerenitySession(SerenityKeyConstants.CART_PRODUCTS_LIST, product);
     }
 }

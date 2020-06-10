@@ -1,7 +1,7 @@
 package com.firestarters.page;
 
 import com.firestarters.models.Cart;
-import com.firestarters.models.CartProduct;
+import com.firestarters.models.Product;
 import net.serenitybdd.core.annotations.findby.FindBy;
 import net.serenitybdd.core.pages.WebElementFacade;
 import net.thucydides.core.annotations.DefaultUrl;
@@ -83,10 +83,10 @@ public class CartPage extends AbstractPage {
     public WebElementFacade getSuccessMsgAddedInWishlist() {
         return successMsgAddedInWishlist;
     }
-    public List<CartProduct> getProducts() {
-        List<CartProduct> products = new ArrayList<>();
+    public List<Product> getProducts() {
+        List<Product> products = new ArrayList<>();
         for (WebElementFacade product : productList) {
-            CartProduct cartProduct = new CartProduct();
+            Product cartProduct = new Product();
             cartProduct
                     .setPrice(Double.parseDouble(product.findElement(By.cssSelector("td[class='product-cart-price']")).getText().replaceAll("[^0-9.]+", "")));
             cartProduct.setQty(Integer.parseInt(product.findElement(By.cssSelector("td[class='product-cart-actions']>input")).getAttribute("value")));
@@ -99,9 +99,9 @@ public class CartPage extends AbstractPage {
         }
         return products;
     }
-    public double getTheSumOfSubtotals(List<CartProduct> producs) {
+    public double getTheSumOfSubtotals(List<Product> producs) {
         double sum = 0;
-        for (CartProduct p : producs) {
+        for (Product p : producs) {
             sum = sum + p.getSubtotal();
         }
         return sum;
@@ -136,7 +136,7 @@ public class CartPage extends AbstractPage {
         return proceedToCheckoutButton;
     }
 
-    public Cart getTotalPricesForOrderReview(List<CartProduct> products) {
+    public Cart getTotalPricesForOrderReview(List<Product> products) {
         Cart cart = new Cart();
         cart.setSubtotal(getTheSumOfSubtotals(products));
         cart.setTax(0);
@@ -157,9 +157,9 @@ public class CartPage extends AbstractPage {
     }
 
     //pt nr de item-uri de la Accout->My Account(x items)
-    public int sumOfQtys(List<CartProduct> products) {
+    public int sumOfQtys(List<Product> products) {
         int sum = 0;
-        for (CartProduct prod : products) {
+        for (Product prod : products) {
             int qty = prod.getQty();
             sum = sum + qty;
 
@@ -172,7 +172,7 @@ public class CartPage extends AbstractPage {
     }
 
     //remove product from cart
-    public void removeProductFromAddedProdList(String name, List<CartProduct> products) {
+    public void removeProductFromAddedProdList(String name, List<Product> products) {
         int poz = -1;
         for (int i = 0; i < products.size(); i++) {
             if (products.get(i).getName().equals(name)) {
@@ -212,16 +212,15 @@ public class CartPage extends AbstractPage {
 
     }
 
-    public void modifyProductQty(String name, String value, List<CartProduct> products) {
-        for (CartProduct prod : products) {
+    public void modifyProductQty(String name, String value, List<Product> products) {
+        for (Product prod : products) {
             String productName = prod.getName();
             if (productName.equals(name)) {
                 prod.setQty(Integer.parseInt(value));
                 int qty = prod.getQty();
                 double price = prod.getPrice();
-                prod.setSubtotal();
-                //modifica si subtotalul
                 //prod.setSubtotal();
+
                 break;
             }
 
@@ -236,10 +235,10 @@ public class CartPage extends AbstractPage {
     public WebElement getMiniCart(){
         return miniCart;
     }
-    public List<CartProduct> getMiniCartRecentlyAddedProd(){
-        List<CartProduct> miniCartProducts=new ArrayList<>();
+    public List<Product> getMiniCartRecentlyAddedProd(){
+        List<Product> miniProducts =new ArrayList<>();
         List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;
-        //System.out.println("size is:"+miniCartProductsUi.size());
+        System.out.println("size is:"+miniCartProductsUi.size());
         for(WebElement prod:miniCartProductsUi){
             String name=prod.findElement(By.cssSelector(".product-name")).getText();
             //System.out.println(name);
@@ -249,15 +248,15 @@ public class CartPage extends AbstractPage {
             String price=prod.findElement(By.cssSelector(".price")).getText();
             // System.out.println(price);
             double doublePrice=convertStringToDouble(stringReplace(price));
-            CartProduct cartProduct=new CartProduct();
-            cartProduct.setName(name);
-            cartProduct.setPrice(doublePrice);
+            Product product =new Product();
+            product.setName(name);
+            product.setPrice(doublePrice);
             int qtyAsint=Integer.parseInt(qty);
-            cartProduct.setQty(qtyAsint);
-            cartProduct.setSubtotal();
-            miniCartProducts.add(cartProduct);
+            product.setQty(qtyAsint);
+            //product.setSubtotal();
+            miniProducts.add(product);
         }
-        return miniCartProducts;
+        return miniProducts;
     }
     public void modifyProductQtyFromMiniCart(String name,String qty){
         List<WebElement> miniCartProductsUi=miniCartRecentlyAddedProd;

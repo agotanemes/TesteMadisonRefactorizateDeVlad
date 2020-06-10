@@ -1,47 +1,48 @@
 package com.firestarters.models;
 
-import com.firestarters.tools.constants.Constants;
 import org.decimal4j.util.DoubleRounder;
 
 import java.util.List;
 
 public class Cart {
-    private double subtotal, tax, grandTotal,taxRate;
-    List<CartProduct> cartProducts;
+    private double subtotal, tax, grandTotal, taxRate;
+
+    public double getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(double taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    List<Product> products;
 
     public Cart() {
     }
 
-
-    public Cart(List<CartProduct> cartProducts) {
-        this.cartProducts = cartProducts;
-        this.subtotal = getSubtotal();
-        this.tax = getTax();
-        this.grandTotal = getGrandTotal();
+    public Cart(List<Product> products) {
+        this.products = products;
     }
-    public Cart(List<CartProduct> cartProducts, double taxRate) {
-        this.cartProducts = cartProducts;
+
+    public Cart(List<Product> products, double taxRate) {
+        this.products = products;
         this.taxRate = taxRate;
         this.subtotal = getSubtotal();
         this.tax = getTax();
         this.grandTotal = getGrandTotal();
     }
 
-
-    public List<CartProduct> getCartProducts() {
-        return cartProducts;
+    public List<Product> getCartProducts() {
+        return products;
     }
 
-    public void setCartProducts(List<CartProduct> cartProducts) {
-        this.cartProducts = cartProducts;
+    public void setCartProducts(List<Product> products) {
+        this.products = products;
     }
 
     public double getSubtotal() {
         this.subtotal = 0;
-        for (CartProduct cartProduct : cartProducts) {
-            this.subtotal = this.subtotal + cartProduct.getSubtotal();
-        }
-        System.out.println("Subtotal !!!!" + subtotal);
+        products.forEach(cartProduct -> this.subtotal = this.subtotal + cartProduct.getPrice() * cartProduct.getQty());
         return this.subtotal;
     }
 
@@ -49,7 +50,7 @@ public class Cart {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((cartProducts == null) ? 0 : cartProducts.hashCode());
+        result = prime * result + ((products == null) ? 0 : products.hashCode());
         long temp;
         temp = Double.doubleToLongBits(grandTotal);
         result = prime * result + (int)(temp ^ (temp >>> 32));
@@ -60,7 +61,6 @@ public class Cart {
         return result;
     }
 
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
@@ -70,10 +70,10 @@ public class Cart {
         if (getClass() != obj.getClass())
             return false;
         Cart other = (Cart)obj;
-        if (cartProducts == null) {
-            if (other.cartProducts != null)
+        if (products == null) {
+            if (other.products != null)
                 return false;
-        } else if (!cartProducts.equals(other.cartProducts))
+        } else if (!products.equals(other.products))
             return false;
         if (Double.doubleToLongBits(grandTotal) != Double.doubleToLongBits(other.grandTotal))
             return false;
@@ -86,16 +86,17 @@ public class Cart {
 
     @Override
     public String toString() {
-        return "Cart [subtotal=" + subtotal + ", tax=" + tax + ", grandTotal=" + grandTotal + ", cartProducts=" + cartProducts + "]";
+        return "Cart [subtotal=" + subtotal + ", tax=" + tax + ", grandTotal=" + grandTotal +  ", products=" + products + "]";
     }
 
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
     }
 
-  public double getTax() {
-      return DoubleRounder.round(this.taxRate * this.subtotal,2);
-  }
+    public double getTax() {
+        //return Math.round(this.taxRate * this.subtotal);
+        return  DoubleRounder.round(this.taxRate * this.subtotal,2);
+    }
 
     public void setTax(double tax) {
         this.tax = tax;

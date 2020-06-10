@@ -1,7 +1,7 @@
 package com.firestarters.steps.ui;
 
 import com.firestarters.models.Cart;
-import com.firestarters.models.CartProduct;
+import com.firestarters.models.Product;
 import com.firestarters.page.CartPage;
 import com.firestarters.tools.constants.SerenityKeyConstants;
 import com.firestarters.tools.utils.SerenitySessionUtils;
@@ -48,7 +48,7 @@ public class CartPageSteps {
 
     //Agota 13.03.2020
     @Step
-    public List<CartProduct> getProducts() {
+    public List<Product> getProducts() {
         return cartPage.getProducts();
     }
 
@@ -95,7 +95,7 @@ public class CartPageSteps {
     }
 
     @Step
-    public Cart getTotalPricesForOrderReview(List<CartProduct> products) {
+    public Cart getTotalPricesForOrderReview(List<Product> products) {
         return cartPage.getTotalPricesForOrderReview(products);
     }
 
@@ -132,7 +132,7 @@ public class CartPageSteps {
 
     //stergerea unui anumit produs din lista de produse introduse in cart
     @Step
-    public void removeProductFromAddedProdList(String name, List<CartProduct> products) {
+    public void removeProductFromAddedProdList(String name, List<Product> products) {
         cartPage.removeProductFromAddedProdList(name, products);
     }
 
@@ -141,18 +141,18 @@ public class CartPageSteps {
         //modificam cantitatea produsului pe front
         cartPage.modifyProductQtyFromCart(name, newValue);
         //cautam pe sesiune produsul pe care vrem sa il modificam
-        CartProduct modifiedCartProduct = getCartProductFromSessionByName(name);
-        modifiedCartProduct.setQty(newValue);
-        modifiedCartProduct.setSubtotal();
-        SerenitySessionUtils.replaceObjectInSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, modifiedCartProduct, "name",
+        Product modifiedProduct = getCartProductFromSessionByName(name);
+        modifiedProduct.setQty(newValue);
+        modifiedProduct.setSubtotal(newValue*modifiedProduct.getPrice());
+        SerenitySessionUtils.replaceObjectInSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, modifiedProduct, "name",
                 name);
     }
 
-    public CartProduct getCartProductFromSessionByName(String name) {
-        List<CartProduct> cartProducts = SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST);
-        for (CartProduct cartProduct : cartProducts) {
-            if (cartProduct.getName().toLowerCase().contentEquals(name.toLowerCase())) {
-                return cartProduct;
+    public Product getCartProductFromSessionByName(String name) {
+        List<Product> products = SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST);
+        for (Product product : products) {
+            if (product.getName().toLowerCase().contentEquals(name.toLowerCase())) {
+                return product;
             }
         }
         return null;
@@ -161,13 +161,13 @@ public class CartPageSteps {
     @Step
     public void removeProductFromCart(String name) {
         cartPage.deleteProductFromCart(name);
-        CartProduct removedCartProduct = getCartProductFromSessionByName(name);
-        SerenitySessionUtils.removeObjectFromSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, removedCartProduct);
+        Product removedProduct = getCartProductFromSessionByName(name);
+        SerenitySessionUtils.removeObjectFromSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, removedProduct);
     }
 
     @Step
     public void verifyCartDetails(double taxRate) {
-        Cart expectedCart = new Cart((List<CartProduct>) SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST), taxRate);
+        Cart expectedCart = new Cart((List<Product>) SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST), taxRate);
         Cart actualCart = new Cart();
         actualCart.setCartProducts(cartPage.getProducts());
         actualCart.setGrandTotal(cartPage.getTotalPriceAsDouble());
@@ -185,20 +185,21 @@ public class CartPageSteps {
         return cartPage.getMiniCart();
     }
     @Step
-    public List<CartProduct> getMiniCartRecentlyAddedProd(){
+    public List<Product> getMiniCartRecentlyAddedProd(){
         return cartPage.getMiniCartRecentlyAddedProd();
     }
 
     @Step
     public void checkIfFoundRecentlyAddedProdInCartList(){
         Cart expectedCart = new Cart(SerenitySessionUtils.getFromSession(SerenityKeyConstants.CART_PRODUCTS_LIST));
-        List<CartProduct> productsfromSession=expectedCart.getCartProducts();
-        List<CartProduct> recentlyAddedProducts=getMiniCartRecentlyAddedProd();
+        List<Product> productsfromSession=expectedCart.getCartProducts();
+        List<Product> recentlyAddedProducts=getMiniCartRecentlyAddedProd();
         int productsSize=productsfromSession.size();
         int recentlyAddedProdListSize=recentlyAddedProducts.size();
         int i=0;
         int j=productsSize-1;
         System.out.println("Begin");
+        System.out.println(recentlyAddedProdListSize);
         while(recentlyAddedProdListSize>0){
             //System.out.println("mini: "+searchedProducts.get(i).getQty()+" product "+products.get(j).getQty());
             Assert.assertEquals(productsfromSession.get(j).getQty(),recentlyAddedProducts.get(i).getQty());
@@ -207,9 +208,9 @@ public class CartPageSteps {
             Double price2=recentlyAddedProducts.get(i).getPrice();
             //Assert.assertTrue(products.get(i).getProductPrice().equals(cartProducts.get(i).getProductPrice()));
             Assert.assertTrue(price1.equals(price2));
-            Double subtotal1=productsfromSession.get(j).getSubtotal();
+            /*Double subtotal1=productsfromSession.get(j).getSubtotal();
             Double subtotal2=recentlyAddedProducts.get(i).getSubtotal();
-            Assert.assertTrue(subtotal1.equals(subtotal2));
+            Assert.assertTrue(subtotal1.equals(subtotal2));*/
             recentlyAddedProdListSize=recentlyAddedProdListSize-1;
             j=j-1;
             i=i+1;
@@ -223,17 +224,17 @@ public class CartPageSteps {
         int quantity=Integer.parseInt(qty);
         //cartPage.modifyProductQtyFromCart(name, quantity);
         //cautam pe sesiune produsul pe care vrem sa il modificam
-        CartProduct modifiedCartProduct = getCartProductFromSessionByName(name);
-        modifiedCartProduct.setQty(quantity);
-        modifiedCartProduct.setSubtotal();
-        SerenitySessionUtils.replaceObjectInSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, modifiedCartProduct, "name",
+        Product modifiedProduct = getCartProductFromSessionByName(name);
+        modifiedProduct.setQty(quantity);
+        modifiedProduct.setSubtotal(quantity*modifiedProduct.getPrice());
+        SerenitySessionUtils.replaceObjectInSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, modifiedProduct, "name",
                 name);
     }
     @Step
     public void removeMiniCartProduct(String name){
         cartPage.removeMiniCartProduct(name);
-        CartProduct removedCartProduct = getCartProductFromSessionByName(name);
-        SerenitySessionUtils.removeObjectFromSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, removedCartProduct);
+        Product removedProduct = getCartProductFromSessionByName(name);
+        SerenitySessionUtils.removeObjectFromSerenitySessionList(SerenityKeyConstants.CART_PRODUCTS_LIST, removedProduct);
 
     }
 

@@ -50,7 +50,7 @@ public class Test001VerifyCart extends BaseTest {
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
-        cartPageSteps.modifyProductQuantityFromCart(secondProductName, 4);
+        cartPageSteps.modifyProductQuantityFromCart(secondProductName, 1);
         cartPageSteps.verifyCartDetails(CART_TAX_RATE);
         cartPageSteps.clickOnWebElem(cartPageSteps.getAccount());
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
