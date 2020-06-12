@@ -6,4 +6,6 @@ public class HttpUrlConstants {
     public static final String OPEN_CART = "checkout/cart/";
     public static final String UPDATE_CART = "checkout/cart/updatePost/";
     public static final String OPEN_WISHLIST="wishlist/";
+    public static final String REGISTER_GET="customer/account/create/";
+    public static final String REGISTER_POST="customer/account/createpost/";
 }

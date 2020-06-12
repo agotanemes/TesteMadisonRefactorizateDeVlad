@@ -16,4 +16,9 @@ public class Constants {
     public static final String BASE_URI = "http://qa2.dev.evozon.com/";
     public static final String EMAIL = "manolachi_ioana@yahoo.com";
     public static final String PASS = "manolachiioana";
+    public static final String firstname="Popescu";
+    public static final String lastname="Claudia";
+    public static final String email="popescuclaudia@yahoo.com";
+    public static final String password="popescuclaudia";
+
 }

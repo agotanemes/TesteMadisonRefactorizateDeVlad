@@ -7,4 +7,5 @@ public class SerenityKeyConstants {
     public static final String HTML_RESPONSE_PRODUCTS = "products html";
     public static final String HTML_RESPONSE_PRODUCT_DETAILS = "products details html";
     public static final String WISHLIST_PRODUCTS_LIST = " wishlist products list";
+    public static final String USER_FOR_REGISTER="user for register";
 }

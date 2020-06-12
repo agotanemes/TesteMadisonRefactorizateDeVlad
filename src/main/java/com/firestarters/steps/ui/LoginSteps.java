@@ -13,4 +13,8 @@ public class LoginSteps extends ScenarioSteps {
     public void login() {
         loginPage.login();
     }
+    @Step
+    public void loginWithNewRegisteredUser(){
+        loginPage.loginWithNewRegisteredUser();
+    }
 }
