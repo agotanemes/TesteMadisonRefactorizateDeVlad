@@ -1,6 +1,5 @@
 package test;
 
-
 import net.serenitybdd.junit.runners.SerenityRunner;
 import net.thucydides.core.annotations.Steps;
 import org.junit.Before;
@@ -50,5 +49,7 @@ public class TestHttpCalls extends BaseTest {
         headerSteps.openCart();
         cartSteps.verifyCartDetails(0.0);
     }
+    
+    //TODO ai putea pune empty cart dupa test
 
 }

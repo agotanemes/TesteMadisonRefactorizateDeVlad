@@ -20,6 +20,7 @@ public class LoginHttpSteps extends AbstractHttpSteps {
         String formKey = JsoupUtils.extractElementAttributeFromHtml(loginPage.asString(), "input[name='form_key']", "value");
 
         Map<String, String> params = new HashMap<String, String>();
+        //TODO poti sa pui in constante toti parametrii deoarece ii vei refolosi, intr-o clasa gen RequestParamKeyConstants
         params.put("login[username]", Constants.EMAIL);
         params.put("login[password]", Constants.PASS);
         params.put("form_key", formKey);

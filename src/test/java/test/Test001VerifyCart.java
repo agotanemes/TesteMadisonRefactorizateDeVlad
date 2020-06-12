@@ -24,7 +24,6 @@ public class Test001VerifyCart extends BaseTest {
 
     @Test
     public void test001VerifyCart() throws IllegalAccessException, InvocationTargetException, NoSuchMethodException {
-
         String firstProductName = "ELIZABETH KNIT TOP";
         homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct("ELIZABETH KNIT TOP");
@@ -43,7 +42,7 @@ public class Test001VerifyCart extends BaseTest {
         cartPageSteps.verifyMyAccountMyCartNrOfItems();
 
         String thirdProductName = "TORI TANK";
-           homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
+        homepageSteps.clickOnSubcategoryOfACategory("New Arrivals", "Women");
         productPageSteps.openProduct(thirdProductName);
         productDetailsSteps.addDetailedProductToCart(1);
         cartPageSteps.verifyCartDetails(CART_TAX_RATE);
@@ -66,20 +65,17 @@ public class Test001VerifyCart extends BaseTest {
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
 
-
-        cartPageSteps.modifyProductQtyFromMiniCart("LAFAYETTE CONVERTIBLE DRESS","3");
+        cartPageSteps.modifyProductQtyFromMiniCart("LAFAYETTE CONVERTIBLE DRESS", "3");
         webdriver.navigate().refresh();
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
         cartPageSteps.verifyCartDetails(CART_TAX_RATE);
-
 
         cartPageSteps.removeMiniCartProduct("TORI TANK");
         webdriver.navigate().refresh();
         cartPageSteps.clickOnWebElem(cartPageSteps.getMiniCart());
         cartPageSteps.checkIfFoundRecentlyAddedProdInCartList();
         cartPageSteps.verifyCartDetails(CART_TAX_RATE);
-
 
     }
 

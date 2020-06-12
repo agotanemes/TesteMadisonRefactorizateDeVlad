@@ -28,8 +28,10 @@ public class WishListTestHttpCalls extends BaseTest {
     private HeaderSteps headerSteps;
     @Steps
     private WishListSteps wishListSteps;
+
     @Before
     public void wishListSetup() {
+        //TODO aici poti incerca si varianta de a adauga un produs cu detalii. De asemenea si la verificarea wishlist-ului sa extragi acele detalii
         loginHttpSteps.login();
         wishListHttpSteps.emptyWishList();
         homeHttpSteps.getProductsFromASubcategory("New Arrivals", "Women");
@@ -37,14 +39,15 @@ public class WishListTestHttpCalls extends BaseTest {
         homeHttpSteps.getProductsFromASubcategory("New Arrivals", "Women");
         homeHttpSteps.addProductToWishList("Lafayette Convertible Dress");
 
-
     }
+
     @Test
-    public void addProductToWishlist(){
+    public void addProductToWishlist() {
         loginSteps.login();
         headerSteps.openWishList();
         wishListSteps.verifyWishListDetails();
 
     }
+    //TODO pune si un empty wishlist dupa test
 
 }

@@ -20,6 +20,7 @@ public class CartHttpSteps extends AbstractHttpSteps {
 
     @Step
     public void emptyCart() {
+        //TODO nu mai pune commenturi in cod, e informatie inutila si face codul nelizibil
         Response cartPage = getRequest(HttpUrlConstants.OPEN_CART);
         //cantitatile produselor din cart(elem din cart)
         Elements cartItems = JsoupUtils.extractElementsAttributesFromHtml(cartPage.asString(), ".product-cart-actions input");
